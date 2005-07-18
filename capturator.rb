@@ -1,11 +1,61 @@
 #!/usr/bin/ruby
 # $Id$
+###########################################################################
+#
+# Capturator
+# For managing those #%&@!ng mencoder tv-capture command strings that no
+# sane person can ever fully memorise.
+#
+# (c) Urpo "WWWWolf" Lankinen 2005
+# You can use, modify and distribute this thing without any restrictions,
+# just leave this copyright notice here as it is. There is no warranty
+# of any kind.
+#
+###########################################################################
+
+require 'optparse'
+
+# Describe your video and audio profiles here
+VideoProfiles = {
+  'BigMPEG4' => "",
+  'NetXviD' => "",
+  'BigXviD' => "",
+}
+AudioProfiles = {
+  'MP3-64kCBR' => "LAME MP3, 64kbps constant bitrate"
+}
+
+outputfile = 'output.avi'
+videoprofile = 'BigMPEG4'
+audioprofile = 'MP3-64kCBR'
+justparms = false
+
+ARGV.options do |opts|
+  opts.on("-o", "--output=file.avi", String,
+	  "File where the captured video is saved.",
+	  "Default: output.avi") { |outputfile| }
+  opts.on("-v", "--videoprofile=profile", String,
+	  "Which set of video settings to use.",
+	  "Default: BigMPEG4",
+	  "Available: " + VideoProfiles.keys.join(" ")) { |videoprofile| }
+  opts.on("-a", "--audioprofile=profile", String,
+	  "Which set of audio settings to use.",
+	  "Default: MP3-64kCBR",
+	  "Available: " + AudioProfiles.keys.join(" ")) { |audioprofile| }
+  opts.on("-p", "--show-parameters",
+	  "Show which mencoder parameters are being used.") {justparms = true}
+  opts.on("-h", "--help",
+	  "Shows this help message.") { puts opts; exit }
+  opts.parse!
+end
+
+###########################################################################
 
 def optstostring(opts)
   ret = ''
   opts.keys.each do |o|
     ret = ret + o +
-      (opts[0].nil? ? "" : "=" + opts[o]) + ':'
+      (opts[o].nil? ? "" : "=" + opts[o]) + ':'
   end
   ret.chop!
   return ret
@@ -24,10 +74,14 @@ def filterstostring(flts)
   return ret
 end
 
-outputfile = 'output.avi'
+###########################################################################
+
+videocodec = nil
+audiocodec = nil
+videooptions = nil
+audiooptions = nil
 vidformat = 'yuy2'
-wantedvideoformat = 'BigMPEG4'
-wantedaudioformat = 'MP3-64kCBR'
+swscaler = nil
 
 VideoCodecOption = {
   'lavc' => '-lavcopts',
@@ -37,6 +91,9 @@ AudioCodecOption = {
   'mp3lame' => '-lameopts'
 }
 
+###########################################################################
+
+# Set up your television settings here.
 tvoptions = {
   'driver' => 'v4l2',
   'width' => '768',
@@ -46,17 +103,14 @@ tvoptions = {
   'alsa' => nil
 }
 
-videocodec = nil
-audiocodec = nil
-videooptions = nil
-audiooptions = nil
-
+# These are the filters that are applied to all profiles.
 videofilters = [
   [ 'crop', '720:544:24:16' ],
   [ 'pp', 'lb' ]
 ]
 
-case wantedvideoformat
+# The video profiles.
+case videoprofile
 when 'BigMPEG4' then
   videocodec = 'lavc'
   videooptions = {
@@ -65,9 +119,27 @@ when 'BigMPEG4' then
     'vme' => '0',
     'keyint' => '250'
   }
+when 'NetXviD' then
+  videocodec = 'xvid'
+  videooptions = {
+    'bitrate' => '900',
+    'vme' => '0',
+    'keyint' => '250'
+  }
+  videofilters.push(['scale','384:288'])
+  swscaler = '1'
+when 'BigXviD' then
+  videocodec = 'xvid'
+  videooptions = {
+    'bitrate' => '1800',
+    'keyint' => '250'
+  }
+  vidformat = nil
+  tvoptions.delete('outfmt')
 end
 
-case wantedaudioformat
+# THe audio profiles.
+case audioprofile
 when 'MP3-64kCBR' then
   audiocodec = 'mp3lame'
   audiooptions = {
@@ -75,24 +147,35 @@ when 'MP3-64kCBR' then
     'br' => '64'
   }
 end
-  
 
+###########################################################################
+
+# Let's build the option string...
 mencoderopts = [
   '/usr/bin/mencoder',
   'tv://',
   '-tv', optstostring(tvoptions),
-  '-vc', 'raw' + vidformat,
   '-of', 'avi',
   '-ovc', videocodec,
   VideoCodecOption[videocodec], optstostring(videooptions),
   '-oac', audiocodec,
   AudioCodecOption[audiocodec], optstostring(audiooptions),
   '-vf',  filterstostring(videofilters),
-  '-sws', '1',
   '-o', outputfile
 ]
+if not swscaler.nil?
+  mencoderopts.push('-sws', swscaler)
+end
+if not vidformat.nil?
+  mencoderopts.push('-vc','raw' + vidformat)
+end
 
-exec mencoderopts
+# And here is what we finally do.
+if justparms
+  p mencoderopts
+else
+  exec mencoderopts
+end
 
 # Local variables:
 # mode:ruby
