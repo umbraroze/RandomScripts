@@ -17,9 +17,9 @@ require 'optparse'
 
 # Describe your video and audio profiles here
 VideoProfiles = {
-  'BigMPEG4' => "",
-  'NetXviD' => "",
-  'BigXviD' => "",
+  'BigMPEG4' => "FFMPEG MPEG4 @ 1800kbps, 720x544",
+  'NetXviD' => "XviD @ 900kbps, 352x288",
+  'BigXviD' => "XviD @ 1800kbps, 720x544",
 }
 AudioProfiles = {
   'MP3-64kCBR' => "LAME MP3, 64kbps constant bitrate"
