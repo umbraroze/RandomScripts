@@ -15,9 +15,12 @@
 
 require 'optparse'
 
+MencoderBinary = '/usr/bin/mencoder'
 # Describe your video and audio profiles here
 VideoProfiles = {
   'BigMPEG4' => "FFMPEG MPEG4 @ 1800kbps, 720x544",
+  'BigMJPEG' => "MJPEG, 720x544",
+  'BigHuffYUV' => "HuffYUV, 720x544",
   'NetXviD' => "XviD @ 900kbps, 352x288",
   'BigXviD' => "XviD @ 1800kbps, 720x544",
 }
@@ -80,7 +83,10 @@ videocodec = nil
 audiocodec = nil
 videooptions = nil
 audiooptions = nil
-vidformat = 'yuy2'
+videoformat = 'yuy2'
+videoinformat = nil   # Set this to make -vc use different raw format than -tv.
+                      # Setting to 'obey' doesn't use -vc if videoformat
+                      # is specified.
 swscaler = nil
 
 VideoCodecOption = {
@@ -98,7 +104,7 @@ tvoptions = {
   'driver' => 'v4l2',
   'width' => '768',
   'height' => '576',
-  'outfmt' => vidformat,
+  'outfmt' => videoformat,
   'fps' => '25',
   'alsa' => nil
 }
@@ -119,12 +125,23 @@ when 'BigMPEG4' then
     'vme' => '0',
     'keyint' => '250'
   }
+when 'BigMJPEG' then
+  videocodec = 'lavc'
+  videooptions = {
+    'vcodec' => 'mjpeg',
+    #'mbd' => '1',
+    #'vbitrate' => '1800'
+  }
+when 'BigHuffYUV' then
+  videocodec = 'lavc'
+  videooptions = {
+    'vcodec' => 'huffyuv'
+  }
 when 'NetXviD' then
   videocodec = 'xvid'
   videooptions = {
     'bitrate' => '900',
     'vme' => '0',
-    'keyint' => '250'
   }
   videofilters.push(['scale','384:288'])
   swscaler = '1'
@@ -132,10 +149,10 @@ when 'BigXviD' then
   videocodec = 'xvid'
   videooptions = {
     'bitrate' => '1800',
-    'keyint' => '250'
+    #'quant_type' => 'mpeg'
   }
-  vidformat = nil
-  tvoptions.delete('outfmt')
+  #videoformat = nil
+  #tvoptions.delete('outfmt')
 end
 
 # THe audio profiles.
@@ -152,7 +169,7 @@ end
 
 # Let's build the option string...
 mencoderopts = [
-  '/usr/bin/mencoder',
+  MencoderBinary,
   'tv://',
   '-tv', optstostring(tvoptions),
   '-of', 'avi',
@@ -166,15 +183,20 @@ mencoderopts = [
 if not swscaler.nil?
   mencoderopts.push('-sws', swscaler)
 end
-if not vidformat.nil?
-  mencoderopts.push('-vc','raw' + vidformat)
+
+if (not videoformat.nil?) and videoinformat != 'obey'
+  if videoinformat.nil?
+    mencoderopts.push('-vc','raw' + videoformat)
+  else
+    mencoderopts.push('-vc','raw' + videoinformat)
+  end
 end
 
 # And here is what we finally do.
 if justparms
   p mencoderopts
 else
-  exec mencoderopts
+  exec mencoderopts.join(" ")
 end
 
 # Local variables:
