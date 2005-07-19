@@ -27,7 +27,7 @@ DefaultVideoProfile = 'BigMPEG4'
 DefaultAudioProfile = 'MP364kCBRAudio'
 
 ###########################################################################
-# Some class definitions here.
+# The base classes are defined here.
 
 class Profile
   attr :description, false
@@ -50,6 +50,9 @@ class Profile
   end
 
   def Profile.profiles_like_this
+    if self == Profile
+      fail "You can only call profiles_like_this from a subclass."
+    end
     if self.superclass != Profile
       return []
     end
@@ -62,6 +65,23 @@ class Profile
     return l
   end
 
+  private
+  def Profile.listp(ct)
+    ct.profiles_like_this.each do |c|
+      a = c.new
+      name = c.name
+      desc = a.description
+      printf("%-15s %s\n",c.name,a.description)
+    end
+  end
+  def Profile.list_profiles
+    puts "\nVideo profiles:"
+    listp(VideoProfile)
+    puts "\nAudio profiles:"
+    listp(AudioProfile)
+    puts
+    exit
+  end
 end
 
 class VideoProfile < Profile
@@ -115,23 +135,6 @@ class AudioProfile < Profile
   end
 end
 class TVProfile < Profile
-end
-
-def listprofs
-  def listp(ct)
-    ct.profiles_like_this.each do |c|
-      a = c.new
-      name = c.name
-      desc = a.description
-      printf("%-15s %s\n",c.name,a.description)
-    end
-  end
-  puts "\nVideo profiles:"
-  listp(VideoProfile)
-  puts "\nAudio profiles:"
-  listp(AudioProfile)
-  puts
-  exit
 end
 
 ###########################################################################
@@ -241,7 +244,9 @@ ARGV.options do |opts|
   opts.on("-p", "--show-parameters",
 	  "Show which mencoder parameters are being used.") {justparms = true}
   opts.on("-l", "--describe-profiles",
-          "More detailed information on each of the profiles.") { listprofs }
+          "More detailed information on each of the profiles.") do
+    Profile.list_profiles
+  end
   opts.on("-h", "--help",
 	  "Shows this help message.") { puts opts; exit }
   opts.parse!
@@ -297,7 +302,7 @@ mencoderopts.push('-vf', vprof.filters.paramstring,
 #  end
 #end
 
-# And here is what we finally do.
+# Finally, some action
 if justparms
   p mencoderopts
 else
