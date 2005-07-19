@@ -47,6 +47,15 @@ ARGV.options do |opts|
 	  "Available: " + AudioProfiles.keys.join(" ")) { |audioprofile| }
   opts.on("-p", "--show-parameters",
 	  "Show which mencoder parameters are being used.") {justparms = true}
+  opts.on("-l", "--describe-profiles",
+          "More detailed information on each of the profiles.") do
+    puts "\nVideo profiles:"
+    VideoProfiles.keys.each { |p| puts "\t#{p}\t\t#{VideoProfiles[p]}" }
+    puts "\nAudio profiles:"
+    AudioProfiles.keys.each { |p| puts "\t#{p}\t\t#{AudioProfiles[p]}" }
+    puts
+    exit
+  end
   opts.on("-h", "--help",
 	  "Shows this help message.") { puts opts; exit }
   opts.parse!
@@ -141,7 +150,6 @@ when 'NetXviD' then
   videocodec = 'xvid'
   videooptions = {
     'bitrate' => '900',
-    'vme' => '0',
   }
   videofilters.push(['scale','384:288'])
   swscaler = '1'
@@ -169,7 +177,6 @@ end
 
 # Let's build the option string...
 mencoderopts = [
-  MencoderBinary,
   'tv://',
   '-tv', optstostring(tvoptions),
   '-of', 'avi',
@@ -196,7 +203,7 @@ end
 if justparms
   p mencoderopts
 else
-  exec mencoderopts.join(" ")
+  exec MencoderBinary, *mencoderopts
 end
 
 # Local variables:
