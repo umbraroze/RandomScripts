@@ -24,10 +24,12 @@ class Profile
   end
 end
 
-
 class VideoProfile < Profile
+  attr :filters, false
+  attr :videoformat, false
+
   class VideoFilters
-    attr :filters
+    attr :filters, false
     def initialize
       @filters = [
 	[ 'crop', '720:544:24:16' ],
@@ -52,16 +54,7 @@ class VideoProfile < Profile
 
   def initialize
     @filters = VideoFilters.new
-    initialize_filters
-  end
-
-  @filters = nil
-  def initialize_filters
-  end
-
-  @videoformat = DefaultVideoFormat
-  def videoformat
-    @videoformat
+    @videoformat = DefaultVideoFormat
   end
 
   def codec_option_switch
@@ -86,62 +79,78 @@ end
 # Video profiles
 
 class BigMPEG4 < VideoProfile
-  @description = "FFMPEG MPEG4 @ 1800kbps, 720x544"
-  @codec = 'lavc'
-  @options = {
-    'vcodec' => 'mpeg4',
-    'vbitrate' => '1800',
-    'vme' => '0',
-    'keyint' => '250'
-  }
+  def initialize
+    super()
+    @description = "FFMPEG MPEG4 @ 1800kbps, 720x544"
+    @codec = 'lavc'
+    @options = {
+      'vcodec' => 'mpeg4',
+      'vbitrate' => '1800',
+      'vme' => '0',
+      'keyint' => '250'
+    }
+  end
 end
 class BigMJPEG < VideoProfile
-  @description = "MJPEG, 720x544"
-  @codec = 'lavc'
-  @options = {
-    'vcodec' => 'mjpeg',
-    #'mbd' => '1',
-    #'vbitrate' => '1800'
-  }
+  def initialize
+    super()
+    @description = "MJPEG, 720x544"
+    @codec = 'lavc'
+    @options = {
+      'vcodec' => 'mjpeg',
+      #'mbd' => '1',
+      #'vbitrate' => '1800'
+    }
+  end
 end
 class BigHuffYUV < VideoProfile
-  @description = "HuffYUV, 720x544"
-  @codec = 'lavc'
-  @options = {
-    'vcodec' => 'huffyuv'
-  }
+  def initialize
+    super()
+    @description = "HuffYUV, 720x544"
+    @codec = 'lavc'
+    @options = {
+      'vcodec' => 'huffyuv'
+    }
+  end
 end
 class NetXviD < VideoProfile
-  @description = "XviD @ 900kbps, 352x288"
-  @codec = 'xvid'
-  @options = {
-    'bitrate' => '900',
-  }
-  def initialize_filters
+  def initialize
+    super()
+    @description = "XviD @ 900kbps, 352x288"
+    @codec = 'xvid'
+    @options = {
+      'bitrate' => '900',
+    }
     @filters.add('scale', '384:288')
   end
   # swscaler = '1'
 end
 class BigXviD < VideoProfile
-  @description = "XviD @ 1800kbps, 720x544"
-  @codec = 'xvid'
-  @options = {
-    'bitrate' => '1800',
-    #'quant_type' => 'mpeg'
-  }
-  #videoformat = nil
-  #tvoptions.delete('outfmt')
+  def initialize
+    super()
+    @description = "XviD @ 1800kbps, 720x544"
+    @codec = 'xvid'
+    @options = {
+      'bitrate' => '1800',
+      #'quant_type' => 'mpeg'
+    }
+    #videoformat = nil
+    #tvoptions.delete('outfmt')
+  end
 end
 
 # Audio profiles
 
 class MP364kCBRAudio < AudioProfile
-  @description = "LAME MP3, 64kbps constant bitrate"
-  @codec = 'mp3lame'
-  @options = {
-    'cbr' => nil,
-    'br' => '64'
-  }
+  def initialize
+    super()  
+    @description = "LAME MP3, 64kbps constant bitrate"
+    @codec = 'mp3lame'
+    @options = {
+      'cbr' => nil,
+      'br' => '64'
+    }
+  end
 end
 
 
