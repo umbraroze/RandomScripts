@@ -34,6 +34,13 @@ class Profile
   attr :codec, false
   attr :options, false
 
+  def n_options
+    if @options.nil?
+      return 0
+    else
+      return @options.keys.length
+    end
+  end
   def codec_option_switch
     fail "Can't do."
   end
@@ -99,6 +106,15 @@ class VideoProfile < Profile
     def add(filter, parms)
       @filters.push([filter,parms])
     end
+    def delete_all_named(filter)
+      @filters.delete_if { |a| a[0] = filter }
+    end
+    def delete_all
+      @filters = []
+    end
+    def n_filters
+      @filters.length
+    end
     def paramstring
       ret = ''
       @filters.each do |f|
@@ -135,9 +151,32 @@ class AudioProfile < Profile
   end
 end
 class TVProfile < Profile
+  def set_cap_resolution(x, y)
+    @options["width"] = x.to_s
+    @options["height"] = y.to_s
+  end
 end
 
 ###########################################################################
+# TV, video and audio profiles
+
+# TV settings
+
+class GlobalTVProfile < TVProfile
+  def initialize
+    super()
+    @options = {
+      'driver' => 'v4l2',
+      'width' => '768',
+      'height' => '576',
+      'outfmt' => DefaultVideoFormat,
+      'fps' => '25',
+      'alsa' => nil
+    }
+  end
+end
+$tvoptions = GlobalTVProfile.new
+
 # Video profiles
 
 class BigMPEG4 < VideoProfile
@@ -163,6 +202,30 @@ class BigMJPEG < VideoProfile
       #'mbd' => '1',
       #'vbitrate' => '1800'
     }
+  end
+end
+class NetMJPEG < VideoProfile
+  def initialize
+    super()
+    @description = "MJPEG, 352x288"
+    @codec = 'lavc'
+    @options = {
+      'vcodec' => 'mjpeg',
+      #'mbd' => '1',
+      #'vbitrate' => '1800'
+    }
+    # @filters.add('scale', '384:288')
+    @filters.delete_all
+    $tvoptions.set_cap_resolution(384,288)
+  end
+end
+class VCRPlaystationMJPEG < NetMJPEG
+  def initialize
+    super()
+    @description += " Playstation cropping"
+    @filters.add('crop','356:228')
+    @filters.add('pp','lb')
+    @filters.add('scale','384:288')
   end
 end
 class BigHuffYUV < VideoProfile
@@ -202,6 +265,14 @@ class BigXviD < VideoProfile
 end
 
 # Audio profiles
+class PCMAudio < AudioProfile
+  def initialize
+    super()
+    @description = "Uncompressed PCM audio"
+    @codec = 'pcm'
+    @options = { }
+  end
+end
 
 class MP364kCBRAudio < AudioProfile
   def initialize
@@ -259,36 +330,24 @@ vprof = eval("#{videoprofile}.new")
 aprof = eval("#{audioprofile}.new")
 
 ###########################################################################
-# TV settings
-
-class GlobalTVOptions < TVProfile
-  def initialize
-    super()
-    @options = {
-      'driver' => 'v4l2',
-      'width' => '768',
-      'height' => '576',
-      'outfmt' => DefaultVideoFormat,
-      'fps' => '25',
-      'alsa' => nil
-    }
-  end
-end
-tvoptions = GlobalTVOptions.new
-
-###########################################################################
 
 # Let's build the option string...
 mencoderopts = [
   'tv://',
-  '-tv', tvoptions.paramstring,
+  '-tv', $tvoptions.paramstring,
   '-of', 'avi',
   '-ovc', vprof.codec]
-mencoderopts.push(*vprof.options)
+if vprof.n_options > 0
+  mencoderopts.push(*vprof.options)
+end
 mencoderopts.push('-oac', aprof.codec)
-mencoderopts.push(*aprof.options)
-mencoderopts.push('-vf', vprof.filters.paramstring,
-		  '-o', outputfile)
+if aprof.n_options > 0
+  mencoderopts.push(*aprof.options)
+end
+if vprof.filters.n_filters > 0
+  mencoderopts.push('-vf', vprof.filters.paramstring)
+end
+mencoderopts.push('-o', outputfile)
 
 #if not swscaler.nil?
 #  mencoderopts.push('-sws', swscaler)
