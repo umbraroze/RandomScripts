@@ -65,7 +65,8 @@ class Profile
     end
     l = []
     ObjectSpace.each_object(Class) do |c|
-      if c.superclass == self
+      # HACK, should do recursive search instead!
+      if c.superclass == self or (not c.superclass.nil? and c.superclass.superclass == self)
 	l.push(c)
       end
     end
@@ -326,8 +327,20 @@ end
 ###########################################################################
 # Get our profiles.
 
-vprof = eval("#{videoprofile}.new")
-aprof = eval("#{audioprofile}.new")
+vprof = nil
+aprof = nil
+begin
+  vprof = eval("#{videoprofile}.new")
+rescue NameError
+  puts "Error: Video profile #{videoprofile} not found."
+end
+
+begin
+  aprof = eval("#{audioprofile}.new")
+rescue NameError
+  puts "Error: Audio profile #{audioprofile} not found."
+end
+
 
 ###########################################################################
 
