@@ -56,6 +56,10 @@ class Profile
     return [codec_option_switch, paramstring]
   end
 
+  def delete_option(option)
+    @options.delete(option)
+  end
+
   def Profile.profiles_like_this
     if self == Profile
       fail "You can only call profiles_like_this from a subclass."
@@ -296,6 +300,7 @@ videoprofile = DefaultVideoProfile
 audioprofile = DefaultAudioProfile
 videoformat = DefaultVideoFormat
 justparms = false
+colorsuppress = false
 
 ARGV.options do |opts|
   opts.on("-o", "--output=file.avi", String,
@@ -318,9 +323,17 @@ ARGV.options do |opts|
   opts.on("-l", "--describe-profiles",
           "More detailed information on each of the profiles.") do
     Profile.list_profiles
+    exit
+  end
+  opts.on("-C", "--suppress-colorspace",
+          "Do not try to diddle with the colorspace.") do
+    colorsuppress = true
   end
   opts.on("-h", "--help",
-	  "Shows this help message.") { puts opts; exit }
+	  "Shows this help message.") do
+    puts opts
+    exit
+  end
   opts.parse!
 end
 
@@ -339,6 +352,11 @@ begin
   aprof = eval("#{audioprofile}.new")
 rescue NameError
   puts "Error: Audio profile #{audioprofile} not found."
+end
+
+# Do we want to NOT diddle with colorspaces?
+if colorsuppress then
+  $tvoptions.delete_option('outfmt')
 end
 
 
