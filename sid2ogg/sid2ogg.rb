@@ -355,8 +355,8 @@ File.open(temp_tag_file, "w") do |f|
   f.puts "COPYRIGHT=#{OPTIONS[:copyright]}"
 end
 puts "Tagging."
-system("vorbiscomment -w #{temp_ogg_file} #{OPTIONS[:output_file]}"+
-       " < #{temp_tag_file}")
+system('vorbiscomment',
+       '-c', temp_tag_file, '-w', temp_ogg_file, OPTIONS[:output_file])
 File.delete(temp_ogg_file)
 File.delete(temp_tag_file)
 
