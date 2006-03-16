@@ -137,14 +137,24 @@ class SongLength
   end
 end
 
-class SongLengthDatabase
+class HVSCTextualDatabase
   attr_reader :database
+
+  def role
+    "a random HVSC rextual database"
+  end
 
   def initialize(db_file)
     if not File.readable?(db_file)
-      fail "Can't read song lenght database from #{db_file}"
+      fail "Can't read #{role} from #{db_file}"
     end
     @database = db_file
+  end
+end
+
+class SongLengthDatabase < HVSCTextualDatabase
+  def role
+    "song length database"
   end
 
   # Figure out the subtune lengths.
@@ -172,6 +182,80 @@ class SongLengthDatabase
   end
 end
 
+class SIDTuneInformationList < HVSCTextualDatabase
+  def role
+    "STIL"
+  end
+
+  # Parses STIL. Holy cow, plain text is pain to parse.
+  def information_for(filename,subtune)
+    File.open(@database) do |f|
+      $_ = ''
+      found = false
+      # Find the start of the record
+      while not $_.nil?
+	f.gets
+	$_.chomp
+	if not $_.index(filename).nil?
+	  found = true
+	  break
+	end
+      end
+      if found == false
+	return nil
+      end
+      # Read the rest of the record, terminated by EOF or blank line
+      record = []
+      while not $_.nil? or $_.chomp == ''
+	f.gets
+	if $_.nil? or $_.chomp == ''
+	  break
+	else
+	  record.push($_.chomp)
+	end
+      end
+      # Turn the record into a per-subtune thingy
+      subtunes = {}
+      while record.length > 0
+	# Keep shifting until you hit the next subtune
+	line = record.shift
+	if line =~ /\(\#(\d+)\)/
+	  curr_subtune = $1.to_i
+	  subtune_lines = []
+	  while true
+	    break if record[0].nil?
+	    break if record[0] =~ /\(\#(\d+)\)/
+	    subtune_lines.push(record.shift)
+	  end
+	  # Now we have the data, let's parse it.
+	  # First, let's crunch comments and other multi-line crap.
+	  c = []
+	  subtune_lines.each do |l|
+	    if(l =~ /^\s*[A-Z]+\s*:/)
+	      c.push(l)
+	    else
+	      trimmed_l = l
+	      trimmed_l.gsub!(/^\s+/,'')
+	      trimmed_l.gsub!(/\s+$/,'')	      
+	      c[c.length - 1] = c.last + " " + trimmed_l
+	    end
+	  end
+	  # Then we hashify the thing!
+	  r = {}
+	  c.each do |l|
+	    # Grab the thingies with regex
+	    l =~ /^\s*([A-Z]+)\s*:\s*(.*)$/
+	    # and stuff that to the result
+	    r[$1.downcase] = $2
+	  end
+	  subtunes[curr_subtune] = r
+	end
+      end
+      return subtunes[subtune]
+    end
+  end
+end
+
 ######################################################################
 ######################################################################
 # Main program
@@ -191,10 +275,15 @@ OPTIONS = {
   :album          => nil,
   :artist         => nil,
   :copyright      => nil,
+  :description    => nil,
 
+  :use_stil       => false,
+  :stereo         => false,
   :full_sid_file  => nil,
   :sid_file       => nil,
   :hvsc_directory => nil,
+  :stil_location  => nil,
+  :dry_run        => false
 }
 
 ARGV.options do |opts|
@@ -225,12 +314,21 @@ ARGV.options do |opts|
           "Override artist.") { |OPTIONS[:artist]| }
   opts.on("-C", "--copyright=copyright", String,
           "Override copyright.") { |OPTIONS[:copyright]| }
+  opts.on("-d", "--stil",
+	  "Use the song information from STIL.") { OPTIONS[:use_stil] = true }
+  opts.on("-2", "--stereo",
+	  "Stereo sidplay2 output.") { OPTIONS[:stereo] = true }
   opts.on("-f", "--fadeout=n", String,
 	  "Fadeout time in seconds.",
 	  "Default: 10") { |x| OPTIONS[:fadeout_time] = x.to_i }
   opts.on("-H", "--hvsc-path=path", String,
           "Path for the HVSC.",
 	  "Default: Based on song path") { |OPTIONS[:hvsc_directory]| }
+  opts.on("-S", "--stil-path=path", String,
+          "Path for the STIL.",
+	  "Default: Use the STIL in HVSC") { |OPTIONS[:stil_location]| }
+  opts.on("-n", "--dry-run",
+	  "Only print info on what's to be done.") { OPTIONS[:dry_run] = true }
 
   opts.separator ""
 
@@ -239,6 +337,12 @@ ARGV.options do |opts|
 
   # Do the command line parsing NOW...
   opts.parse!
+
+  # Do we have a file name? if not, let's bail out.
+  if ARGV.length != 1
+    puts opts; exit
+  end
+
   # ...and pop the full sid file name from the command line.
   OPTIONS[:full_sid_file] = File.expand_path(ARGV.pop)
   # We're done with command line now. Time to mess with the rest.
@@ -247,6 +351,11 @@ ARGV.options do |opts|
   if OPTIONS[:hvsc_directory].nil?
     OPTIONS[:full_sid_file] =~ /(^.*\/C64Music).*/
     OPTIONS[:hvsc_directory] = $1
+  end
+  # Establish STIL file name
+  if OPTIONS[:stil_location].nil?
+    OPTIONS[:stil_location] =
+      OPTIONS[:hvsc_directory] + '/DOCUMENTS/STIL.txt'
   end
   # Establish songlength database file location
   if OPTIONS[:song_length_db].nil?
@@ -279,10 +388,30 @@ end
 hdr = PSIDFile.new(OPTIONS[:full_sid_file])
 header = hdr.header
 
-# Figure out the remaining details
+# If the user doesn't specify the song subtune, use the one in the header.
 if OPTIONS[:subtune].nil?
   OPTIONS[:subtune] = header['start_song'][0]
 end
+
+# Now we know the song name and subtune. Let's get information from STIL,
+# if the user wants that.
+stilinfo = nil
+if OPTIONS[:use_stil]
+  stil = SIDTuneInformationList.new(OPTIONS[:stil_location])
+  stilinfo = stil.information_for(OPTIONS[:sid_file], OPTIONS[:subtune])
+  unless stilinfo['comment'].nil?
+    OPTIONS[:description] = stilinfo['comment']
+  end
+  if OPTIONS[:title].nil? and not stilinfo['title'].nil?
+    OPTIONS[:title] = stilinfo['title']
+  end
+  if OPTIONS[:artist].nil? and not stilinfo['artist'].nil?
+    OPTIONS[:artist] = stilinfo['artist']
+  end
+end
+
+# And now that we've honored  command line parameters, subtune switch/header,
+# and STIL, let's fill the unknown things from the song header.
 if OPTIONS[:title].nil?
   OPTIONS[:title] = header['title']
 end
@@ -320,14 +449,23 @@ puts
 puts "Sidfile: #{OPTIONS[:sid_file]}"
 puts "HVSCdir: #{OPTIONS[:hvsc_directory]}"
 puts "SongLengthDB: #{OPTIONS[:song_length_db]}"
+if OPTIONS[:use_stil]
+  puts "STIL: #{OPTIONS[:stil_location]}"
+  if OPTIONS[:dry_run]
+    puts "STIL data: #{stilinfo.inspect}"
+  end
+end
 
 puts "Output file: #{OPTIONS[:output_file]}"
 puts "Subtune: #{OPTIONS[:subtune]}"
 puts "Song length: #{OPTIONS[:song_length]} (#{OPTIONS[:song_length_sec]} s)"
 puts "Fadeout: #{OPTIONS[:fadeout_time]} s"
+puts "Channels: #{OPTIONS[:stereo]?'Stereo':'Mono'}"
 puts
-puts "Information from the PSID header:"
-hdr.dump_header
+if OPTIONS[:dry_run]
+  puts "Information from the PSID header:"
+  hdr.dump_header
+end
 puts
 
 temp_wav_file = "/tmp/sid2ogg_tmp_#{$$}.wav"
@@ -335,11 +473,37 @@ temp_wav_file_faded = "/tmp/sid2ogg_tmp_#{$$}_faded.wav"
 temp_tag_file = "/tmp/sid2ogg_tmp_#{$$}_tag.txt"
 temp_ogg_file = "/tmp/sid2ogg_tmp_#{$$}.ogg"
 
+if OPTIONS[:dry_run]
+  puts "Output WAV: #{temp_wav_file}"
+  puts "Output WAV with fadeout applied: #{temp_wav_file_faded}"
+  puts "Tags file: #{temp_tag_file}"
+  puts "Untagged encoded file: #{temp_ogg_file}"
+  puts
+  puts "Final file tag data:"
+  puts "TITLE: #{OPTIONS[:title]}"
+  puts "ALBUM: #{OPTIONS[:album]}"
+  puts "ARTIST: #{OPTIONS[:artist]}"
+  puts "COPYRIGHT: #{OPTIONS[:copyright]}"
+  unless OPTIONS[:description].nil?
+    puts "DESCRIPTION: #{OPTIONS[:description]}"
+  end
+  puts
+  exit
+end
+
 # The moment we've all been waiting for...
 
 puts "Playing the file."
-system("sidplay2", "-w#{temp_wav_file}", "-t#{OPTIONS[:song_length]}",
-       OPTIONS[:full_sid_file], "-o#{OPTIONS[:subtune]}")
+if OPTIONS[:stereo]
+  # stereo output
+  system("sidplay2", "-w#{temp_wav_file}", "-t#{OPTIONS[:song_length]}",
+	 "-s",
+	 OPTIONS[:full_sid_file], "-o#{OPTIONS[:subtune]}")
+else
+  # mono output
+  system("sidplay2", "-w#{temp_wav_file}", "-t#{OPTIONS[:song_length]}",
+	 OPTIONS[:full_sid_file], "-o#{OPTIONS[:subtune]}")
+end
 puts "Applying fadeout."
 system("sox", temp_wav_file, temp_wav_file_faded,
        "fade", 't', '0',
@@ -353,6 +517,9 @@ File.open(temp_tag_file, "w") do |f|
   f.puts "ALBUM=#{OPTIONS[:album]}"
   f.puts "ARTIST=#{OPTIONS[:artist]}"
   f.puts "COPYRIGHT=#{OPTIONS[:copyright]}"
+  unless OPTIONS[:description].nil?
+    f.puts "DESCRIPTION=#{OPTIONS[:description]}"
+  end
 end
 puts "Tagging."
 system('vorbiscomment',
