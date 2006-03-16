@@ -441,7 +441,7 @@ end
 # Actual conversion
 
 puts
-puts "SID2OGG by Urpo Lankinen, v1.0, 2005-12-05"
+puts "SID2OGG by Urpo Lankinen, v1.1, 2006-03-16"
 puts "=========================================="
 puts
 
