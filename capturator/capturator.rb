@@ -3,12 +3,26 @@
 ###########################################################################
 #
 # Capturator
-# For managing those #%&@!ng mencoder tv-capture command strings that no
-# sane person can ever fully memorise.
+# ==========
+#
+# This program is designed to build a mencoder command line. That's all.
+# If you need object orientation to cook a command line for an application,
+# it's probably an indication of a larger problem (as in "where's my
+# frigging configuration file support"?) Furthermore, mencoder's 
+# command line syntax is self-contradictory (options syntax vs
+# filters syntax) and just plain unmemorizable.
+# 
+# I'll keep adding to this program every now and then when the stuff gets
+# messed up for no particular reason due to some upgrade somewhere.
+# mencoder has a funny habit of *not* being so stable in this respect.
+# (It worked just fine for a while, then colors started flickering
+# and 352x288 video capture was laggy on a AMD 3000+ proc. *sigh*)
 #
 # "Object orientation done fruitily."
+# And no, I don't claim this is particularly clean Ruby. But neither is
+# the *objective* particularly clean.
 #
-# (c) Urpo "WWWWolf" Lankinen 2005
+# (c) Urpo "WWWWolf" Lankinen 2005-2006
 # You can use, modify and distribute this thing without any restrictions,
 # just leave this copyright notice here as it is. There is no warranty
 # of any kind.
@@ -54,6 +68,10 @@ class Profile
   end
   def options
     return [codec_option_switch, paramstring]
+  end
+
+  def set_option(option,value=nil)
+    @options[option] = value
   end
 
   def delete_option(option)
@@ -176,7 +194,13 @@ class GlobalTVProfile < TVProfile
       'height' => '576',
       'outfmt' => DefaultVideoFormat,
       'fps' => '25',
-      'alsa' => nil
+      'alsa' => nil,
+      # Specifying this is a fucking exercise in the fucking hilarity.
+      # "Oh, your parameter has a colon in it? Well, we aren't going to
+      # tell how to encode it. And encode it you must, because we happened
+      # to guess that you don't need it and decided to make the colon an
+      # option separator."
+      'adevice' => 'hw'
     }
   end
 end
@@ -291,7 +315,6 @@ class MP364kCBRAudio < AudioProfile
   end
 end
 
-
 ###########################################################################
 # Process the parameters
 
@@ -301,6 +324,7 @@ audioprofile = DefaultAudioProfile
 videoformat = DefaultVideoFormat
 justparms = false
 colorsuppress = false
+forceaudio = false
 
 ARGV.options do |opts|
   opts.on("-o", "--output=file.avi", String,
@@ -328,6 +352,10 @@ ARGV.options do |opts|
   opts.on("-C", "--suppress-colorspace",
           "Do not try to diddle with the colorspace.") do
     colorsuppress = true
+  end
+  opts.on("-A", "--force-audio",
+          "Force audio capture when mencoder colossally fails to recognise your capture card") do
+    forceaudio = true
   end
   opts.on("-h", "--help",
 	  "Shows this help message.") do
@@ -357,6 +385,14 @@ end
 # Do we want to NOT diddle with colorspaces?
 if colorsuppress then
   $tvoptions.delete_option('outfmt')
+end
+
+# Did the user say "the goddamn mencoder fails to recognise my goddamn
+# sound card for some goddamn reason, even when the fucking tvtime plays
+# sound just fine and the fucking documentation just tells to turn up the
+# sound?"
+if forceaudio then
+  $tvoptions.set_option('forceaudio')
 end
 
 
