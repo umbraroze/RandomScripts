@@ -195,12 +195,7 @@ class GlobalTVProfile < TVProfile
       'outfmt' => DefaultVideoFormat,
       'fps' => '25',
       'alsa' => nil,
-      # Specifying this is a fucking exercise in the fucking hilarity.
-      # "Oh, your parameter has a colon in it? Well, we aren't going to
-      # tell how to encode it. And encode it you must, because we happened
-      # to guess that you don't need it and decided to make the colon an
-      # option separator."
-      'adevice' => 'hw'
+      'adevice' => 'hw.0,0' # Format of this parameter took some figuring out
     }
   end
 end
