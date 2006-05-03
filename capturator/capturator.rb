@@ -404,10 +404,8 @@ if colorsuppress then
   $tvoptions.delete_option('outfmt')
 end
 
-# Did the user say "the goddamn mencoder fails to recognise my goddamn
-# sound card for some goddamn reason, even when the fucking tvtime plays
-# sound just fine and the fucking documentation just tells to turn up the
-# sound?"
+# Is the user an optimist and believes the sound recording will work,
+# even when mencoder has its ears full of wax anyway?
 if forceaudio then
   $tvoptions.set_option('forceaudio')
 end
