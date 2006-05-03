@@ -5,22 +5,44 @@
 # Capturator
 # ==========
 #
-# This program is designed to build a mencoder command line. That's all.
+# This program is designed to build a mencoder command line for recording
+# stuff from TV. That's all.
+#
 # If you need object orientation to cook a command line for an application,
 # it's probably an indication of a larger problem (as in "where's my
 # frigging configuration file support"?) Furthermore, mencoder's 
 # command line syntax is self-contradictory (options syntax vs
 # filters syntax) and just plain unmemorizable.
+#
+# mencoder's sins:
+#  * Utterly unmemorizable syntax.
+#  * Huge mouthfuls of parameters to write.
+#  * "Just write a shell script" isn't an end-user solution.
+#    This script should be ample evidence to the contrary, for Christ's sake.
+#    "Just write a configuration file" *is* an end-user solution.
+#    In an ideal world:
+#       $ mencoder -conf mpeg4_tv.conf -o latest_surreality_tv.avi
+#  * Two different parameter list formats (one for drivers,
+#    another for filters).
+#  * Picked-off-the-hat escape characters in the aforementioned list.
+#  * Undocumented ALSA device syntax, related to earlier point.
+#    (how do I spell "hw:0.0" so that this command line parser
+#    doesn't blow up? "hw.0,0". Duh. Obvious. Learn.)
+#
+# In jwz's words, "pure comedy".
 # 
 # I'll keep adding to this program every now and then when the stuff gets
 # messed up for no particular reason due to some upgrade somewhere.
 # mencoder has a funny habit of *not* being so stable in this respect.
-# (It worked just fine for a while, then colors started flickering
-# and 352x288 video capture was laggy on a AMD 3000+ proc. *sigh*)
+# (It worked just fine for a while, then colors started flickering -
+# for some reason it couldn't match my colorspaces anymore -
+# and 352x288 video capture was realllly laggy on a AMD 3000+ proc.
+# And more recently, it fails to record audio at all. *sigh* I know,
+# "I didn't change anything!", but still.)
 #
 # "Object orientation done fruitily."
 # And no, I don't claim this is particularly clean Ruby. But neither is
-# the *objective* particularly clean.
+# the *purpose* particularly clean.
 #
 # (c) Urpo "WWWWolf" Lankinen 2005-2006
 # You can use, modify and distribute this thing without any restrictions,
@@ -345,11 +367,11 @@ ARGV.options do |opts|
     exit
   end
   opts.on("-C", "--suppress-colorspace",
-          "Do not try to diddle with the colorspace.") do
+          "Do not try to diddle with the colorspace. Usage recommended.") do
     colorsuppress = true
   end
   opts.on("-A", "--force-audio",
-          "Force audio capture when mencoder colossally fails to recognise your capture card") do
+          "Force audio capture when mencoder colossally fails to recognise your capture card (it won't help anyway, trust me, but the option is here!)") do
     forceaudio = true
   end
   opts.on("-h", "--help",
