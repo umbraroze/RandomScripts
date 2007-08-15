@@ -65,20 +65,42 @@ class GHGetMonster
 			s.to_s =~ /var data =/
 		}.to_s)
 		code =~ /\"(http:\/\/[^\"]+)\"/
-		realurl = $1.gsub(/ /,'%20')
-		STDERR.puts "[Song  ] Grabbed URL: #{realurl}"
+		realurl = $1
+		unless realurl.nil?
+			realurl.gsub!(/ /,'%20')
+			realurl.gsub!(/,/,'%2C')
+			STDERR.puts "[Song  ] Grabbed URL: #{realurl}"
+		else
+			STDERR.puts "[Song  ] ...hmm, can't get it."
+		end
 		return realurl
 	end
 	def get(url)
 		STDERR.puts "[Main  ] Going to get the index"
 		parse_index_page(url)
+		if @song_info_pages.length == 0
+			STDERR.puts "[Main  ] Well, that doesn't bode well. Better quit while we're still winning."
+			exit
+		end
 		STDERR.puts "[Main  ] Going to get the songs now"
 		@song_info_pages.each do |p|
-			s = rand(11)+1
-			STDERR.puts "[Main  ] Throttling for #{s} seconds"
-			sleep s
-			url = parse_song_page(p)
+			url = nil
+			site_dead = false
+			while url.nil?
+				s = (rand(10)+1)
+				if site_dead
+					s += (rand(20)+1)
+				end
+				STDERR.puts "[Main  ] Throttling for #{s} seconds"
+				sleep s
+				url = parse_song_page(p)
+				if url.nil?
+					STDERR.puts "[NOTE  ] Couldn't grab the URL. (Site dying?) Retrying..."
+					site_dead = true
+				end
+			end
 			puts "wget --referer=#{p} '#{url}'"
+			STDOUT.flush
 		end
 	end
 end
