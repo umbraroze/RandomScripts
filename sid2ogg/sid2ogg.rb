@@ -11,18 +11,21 @@
 # and vorbiscomment.
 #
 # Some quirks though:
-#  * Nobody bothered to explain me HOW to come up with the MD5sum
-#    that is stored in Songlengths. I do "md5sum whatever.sid", get
-#    a sum, do "grep thatsumthing Songlengths.txt" and get nothing
-#    in return. Every. Single. Time. So this thing instead looks
-#    at songlengths comment, ignores the md5sum, and uses the line
-#    that follows the comment.
+#  * md5sums in Songlengths.txt are not based on file contents, but
+#    some weird hack-up (see src/wrapper/SidTuneMod.cpp in xsidplay
+#    source code), ostensibly to account for file format/metadata
+#    changes... while making the file format surprisingly difficult
+#    to use from scripts, at least as specced. I frankly
+#    fail to see why they chose this... *curious* method, if you
+#    think of the bigger picture. Thus, I'm completely ignoring
+#    the md5sums and just using the paths provided in Songlengths.txt
+#    comment fields.
 #  * Most of this stuff is really, really, really ugly. Among other
 #    things I'm a Perl coder... and it shows. =)
 #
 ######################################################################
 #
-# (c) WWWWolf (Urpo Lankinen), 2005-12-03
+# (c) WWWWolf (Urpo Lankinen), 2005,2006,2007
 # wwwwolf@iki.fi / http://www.iki.fi/wwwwolf/
 #
 # You're free to use this script for any purpose, and expand/tinker with it
@@ -90,7 +93,7 @@ class PSIDFile
     @header = Hash.new
     File.open(@filename) do |f|
       magic = f.read(4)
-      fail "#{@filename}: can't find PSID header." unless magic == 'PSID'
+      fail "#{@filename} does not appear to be a PSID or RSID file." unless (magic == 'PSID' or magic == 'RSID')
       @psid_header.each do |h|
 	@header[h.name] = f.read(h.type.length).unpack(h.type.decode_string)
       end
