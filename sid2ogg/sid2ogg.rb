@@ -286,7 +286,8 @@ OPTIONS = {
   :sid_file       => nil,
   :hvsc_directory => nil,
   :stil_location  => nil,
-  :dry_run        => false
+  :dry_run        => false,
+  :leave_wav      => false
 }
 
 ARGV.options do |opts|
@@ -332,6 +333,8 @@ ARGV.options do |opts|
 	  "Default: Use the STIL in HVSC") { |OPTIONS[:stil_location]| }
   opts.on("-n", "--dry-run",
 	  "Only print info on what's to be done.") { OPTIONS[:dry_run] = true }
+  opts.on("-W", "--leave-wav",
+	  "Also leave the .wav file around.") { OPTIONS[:leave_wav] = true }
 
   opts.separator ""
 
@@ -371,6 +374,10 @@ ARGV.options do |opts|
 
   if OPTIONS[:output_file].nil?
     OPTIONS[:output_file] = File.basename(OPTIONS[:sid_file], ".sid") + ".ogg"
+  end
+  if OPTIONS[:leave_wav]
+    OPTIONS[:output_wav_file] =
+      File.basename(OPTIONS[:output_file], ".ogg") + ".wav"
   end
 end
 
@@ -514,7 +521,12 @@ system("sox", temp_wav_file, temp_wav_file_faded,
 File.delete(temp_wav_file)
 puts "Encoding."
 system("oggenc", "-o", temp_ogg_file, temp_wav_file_faded)
-File.delete(temp_wav_file_faded)
+if OPTIONS[:leave_wav]
+  File.rename(temp_wav_file_faded,OPTIONS[:output_wav_file])
+  puts "WAV file left as #{OPTIONS[:output_wav_file]}"
+else
+  File.delete(temp_wav_file_faded)
+end
 File.open(temp_tag_file, "w") do |f|
   f.puts "TITLE=#{OPTIONS[:title]}"
   f.puts "ALBUM=#{OPTIONS[:album]}"
@@ -531,3 +543,5 @@ File.delete(temp_ogg_file)
 File.delete(temp_tag_file)
 
 puts "Done encoding the file to #{OPTIONS[:output_file]}."
+
+# jEdit:mode=ruby:encoding=utf-8:tabSize=2:indentSize=2:noTabs=true:
