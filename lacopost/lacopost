@@ -33,14 +33,13 @@ USER_AGENT = "Lacopost/#{LACOPOST_VERSION} "+
   "(#{RUBY_PLATFORM}; Ruby/#{RUBY_VERSION})"
 
 def create_settings_file(user,password,apiroot=DEFAULT_API_ROOT)
-  settings = {
-    'user' => user,
-    'password' => password,
-    'apiroot' => apiroot
-  }
   store = YAML::Store.new(SETTINGS_FILE)
   store.transaction do
-    store['settings'] = settings
+    store['settings'] = {
+      'user' => user,
+      'password' => password,
+      'apiroot' => apiroot
+    }
   end
   File.chmod(0600,SETTINGS_FILE)
 end
@@ -55,7 +54,6 @@ end
 
 Readline::emacs_editing_mode
 # Settings
-settings = {}
 unless File.exists?(SETTINGS_FILE)
   puts "Lacopost must be configured first. To reconfigure, edit or delete"
   puts "the settings file, #{SETTINGS_FILE}."
@@ -95,7 +93,6 @@ while true
   end
   puts "#{response.code} #{response.message}"
   # puts "Body:\n---\n#{response.body}\n---\n"
-
 end
 puts "\n\nThanks for using Lacopost!\n\n"
 
