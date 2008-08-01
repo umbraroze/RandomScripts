@@ -1,0 +1,22 @@
+#!/usr/bin/ruby
+######################################################################
+#
+# lacopost
+#
+# Post messages to a laconi.ca server (such as http://identi.ca/).
+#
+# Can be run interactively in terminal or used to post stuff directly
+# based on command line arguments.
+# When first run, it will try to set things up interactively.
+#
+# Quickly hacked together by Urpo Lankinen <http://www.iki.fi/wwwwolf/>
+# See my stuff here: http://identi.ca/wwwwolf/
+#
+# Copyright (c) Urpo Lankinen 2008 
+# Do whatever you want with this script, but don't remove this
+# copyright notice. There's NO WARRANTY express or implied.
+#
+######################################################################
+# $Id$
+######################################################################
+
