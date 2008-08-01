@@ -4,6 +4,7 @@
 # lacopost
 #
 # Post messages to a laconi.ca server (such as http://identi.ca/).
+# Uses the Twitter api.
 #
 # Can be run interactively in terminal or used to post stuff directly
 # based on command line arguments.
@@ -19,4 +20,82 @@
 ######################################################################
 # $Id$
 ######################################################################
+
+require 'readline'
+require 'yaml/store'
+require 'net/http'
+require 'uri'
+
+LACOPOST_VERSION = '0.0'
+SETTINGS_FILE = "#{ENV['HOME']}/.lacopost"
+DEFAULT_API_ROOT = 'http://identi.ca/api/'
+USER_AGENT = "Lacopost/#{LACOPOST_VERSION} "+
+  "(#{RUBY_PLATFORM}; Ruby/#{RUBY_VERSION})"
+
+def create_settings_file(user,password,apiroot=DEFAULT_API_ROOT)
+  settings = {
+    'user' => user,
+    'password' => password,
+    'apiroot' => apiroot
+  }
+  store = YAML::Store.new(SETTINGS_FILE)
+  store.transaction do
+    store['settings'] = settings
+  end
+  File.chmod(0600,SETTINGS_FILE)
+end
+def read_settings
+  settings = {}
+  store = YAML::Store.new(SETTINGS_FILE)
+  store.transaction do
+    settings = store['settings']
+  end
+  return settings
+end
+
+Readline::emacs_editing_mode
+# Settings
+settings = {}
+unless File.exists?(SETTINGS_FILE)
+  puts "Lacopost must be configured first. To reconfigure, edit or delete"
+  puts "the settings file, #{SETTINGS_FILE}."
+  username = nil
+  while username.nil? or username.length == 0
+    username = Readline::readline('User name: ')
+  end
+  password = Readline::readline('Password (will be echoed; can leave blank to define later): ')
+  if password.length == 0
+    password = nil
+  end
+  apiroot = Readline::readline("API root (default: #{DEFAULT_API_ROOT}): ")
+  if apiroot.nil? or apiroot.length == 0
+    apiroot = DEFAULT_API_ROOT
+  end
+  create_settings_file(username,password,apiroot)
+end
+settings = read_settings
+
+puts "\nWelcome to Lacopost #{LACOPOST_VERSION}."
+puts "Type 'quit' or press Ctrl+D to end the session.\n\n"
+while true
+  l = Readline::readline('> ')
+  break if l.nil? or l.downcase == 'quit'
+  Readline::HISTORY.push(l)
+  if l.length > 140
+    puts "ERROR: Message too long (#{l.length} bytes, max. 140)"
+    next
+  end
+  url = URI.parse("#{settings['apiroot']}statuses/update.xml")
+  request = Net::HTTP::Post.new(url.path)
+  request.basic_auth(settings['user'],settings['password'])
+  request.set_form_data({'status'=>l})
+  request['User-Agent'] = USER_AGENT
+  response = Net::HTTP.start(url.host, url.port) do |http|
+    http.request(request)
+  end
+  puts "#{response.code} #{response.message}"
+  # puts "Body:\n---\n#{response.body}\n---\n"
+
+end
+puts "\n\nThanks for using Lacopost!\n\n"
 
