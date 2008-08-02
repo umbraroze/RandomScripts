@@ -53,7 +53,6 @@ def read_settings
 end
 
 Readline::emacs_editing_mode
-# Settings
 unless File.exists?(SETTINGS_FILE)
   puts "Lacopost must be configured first. To reconfigure, edit or delete"
   puts "the settings file, #{SETTINGS_FILE}."
@@ -72,6 +71,10 @@ unless File.exists?(SETTINGS_FILE)
   create_settings_file(username,password,apiroot)
 end
 settings = read_settings
+
+if ENV.has_key?('TERM') and ENV['TERM'] =~ /xterm/
+	print "\033]0;Lacopost #{LACOPOST_VERSION} - #{settings['apiroot']}\007"
+end
 
 puts "\nWelcome to Lacopost #{LACOPOST_VERSION}."
 puts "Type 'quit' or press Ctrl+D to end the session.\n\n"
@@ -96,3 +99,7 @@ while true
 end
 puts "\n\nThanks for using Lacopost!\n\n"
 
+# Local variables:
+# mode:ruby
+# End:
+# jEdit:mode=ruby:indentSize=2:tabSize=2:noTabs:
