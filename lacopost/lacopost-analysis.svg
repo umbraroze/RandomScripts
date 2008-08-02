@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="1488.189"
+   id="svg1901"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="lacopost-analysis.svg"
+   sodipodi:docbase="/home/tsoots/ohj/translations/po"
+   version="1.0"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/wwwwolf/Development/lacopost/lacopost-analysis.png"
+   inkscape:export-xdpi="100.02762"
+   inkscape:export-ydpi="100.02762">
+  <defs
+     id="defs1903">
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path4110"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none"
+         transform="scale(0.8) translate(12.5,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective7" />
+    <inkscape:perspective
+       id="perspective2407"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3011"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49523281"
+     inkscape:cx="526.18109"
+     inkscape:cy="744.09448"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer3"
+     gridtolerance="10000"
+     inkscape:window-width="877"
+     inkscape:window-height="739"
+     inkscape:window-x="177"
+     inkscape:window-y="0"
+     showgrid="false" />
+  <metadata
+     id="metadata1906">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Source"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="opacity:1"
+     sodipodi:insensitive="true">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4005"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+       transform="matrix(0.9784411,0,0,0.9770981,0.2227638,4.9071121e-2)"><flowRegion
+         id="flowRegion4007"><rect
+           id="rect4009"
+           width="1025.7802"
+           height="1484.1505"
+           x="14.134767"
+           y="2.0192523"
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata" /></flowRegion><flowPara
+         id="flowPara4011" /></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4223"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+       transform="matrix(1.1243997,0,0,1.1228564,1.9693168,-40.599926)"><flowRegion
+         id="flowRegion4225"><rect
+           id="rect4227"
+           width="534.76984"
+           height="1328.769"
+           x="16.154018"
+           y="46.442802"
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata" /></flowRegion><flowPara
+         id="flowPara4439"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata">#!/usr/bin/ruby</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6582">######################################################################</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6584">#</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6586"># lacopost</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6588">#</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6590"># Post messages to a laconi.ca server (such as http://identi.ca/).</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6592"># Uses the Twitter api.</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6594">#</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6596"># Can be run interactively in terminal or used to post stuff directly</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6598"># based on command line arguments.</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6600"># When first run, it will try to set things up interactively.</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6602">#</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6604"># Quickly hacked together by Urpo Lankinen &lt;http://www.iki.fi/wwwwolf/&gt;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6606"># See my stuff here: http://identi.ca/wwwwolf/</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6608">#</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6610"># Copyright (c) Urpo Lankinen 2008 </flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6612"># Do whatever you want with this script, but don't remove this</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6614"># copyright notice. There's NO WARRANTY express or implied.</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6616">#</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6618">######################################################################</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6620"># $Id: lacopost 59 2008-08-02 10:29:06Z wwwwolf $</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6622">######################################################################</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6624" /><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6626">require 'readline'</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6628">require 'yaml/store'</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6630">require 'net/http'</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6632">require 'uri'</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6634" /><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6636">LACOPOST_VERSION = '0.0'</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6638">SETTINGS_FILE = &quot;#{ENV['HOME']}/.lacopost&quot;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6640">DEFAULT_API_ROOT = 'http://identi.ca/api/'</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6642">USER_AGENT = &quot;Lacopost/#{LACOPOST_VERSION} &quot;+</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6644">  &quot;(#{RUBY_PLATFORM}; Ruby/#{RUBY_VERSION})&quot;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6646" /><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6648">def create_settings_file(user,password,apiroot=DEFAULT_API_ROOT)</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6650">  store = YAML::Store.new(SETTINGS_FILE)</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6652">  store.transaction do</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6654">    store['settings'] = {</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6656">      'user' =&gt; user,</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6658">      'password' =&gt; password,</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6660">      'apiroot' =&gt; apiroot</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6662">    }</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6664">  end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6666">  File.chmod(0600,SETTINGS_FILE)</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6668">end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6670">def read_settings</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6672">  settings = {}</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6674">  store = YAML::Store.new(SETTINGS_FILE)</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6676">  store.transaction do</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6678">    settings = store['settings']</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6680">  end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6682">  return settings</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6684">end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6686" /><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6688">Readline::emacs_editing_mode</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6690">unless File.exists?(SETTINGS_FILE)</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6692">  puts &quot;Lacopost must be configured first. To reconfigure, edit or delete&quot;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6694">  puts &quot;the settings file, #{SETTINGS_FILE}.&quot;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6696">  username = nil</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6698">  while username.nil? or username.length == 0</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6700">    username = Readline::readline('User name: ')</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6702">  end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6704">  password = Readline::readline('Password (will be echoed; can leave blank to define later): ')</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6706">  if password.length == 0</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6708">    password = nil</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6710">  end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6712">  apiroot = Readline::readline(&quot;API root (default: #{DEFAULT_API_ROOT}): &quot;)</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6714">  if apiroot.nil? or apiroot.length == 0</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6716">    apiroot = DEFAULT_API_ROOT</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6718">  end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6720">  create_settings_file(username,password,apiroot)</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6722">end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6724">settings = read_settings</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6726" /><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6728">if ENV.has_key?('TERM') and ENV['TERM'] =~ /xterm/</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6730"> print &quot;\033]0;Lacopost #{LACOPOST_VERSION} - #{settings['apiroot']}\007&quot;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6732">end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6734" /><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6736">puts &quot;\nWelcome to Lacopost #{LACOPOST_VERSION}.&quot;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6738">puts &quot;Type 'quit' or press Ctrl+D to end the session.\n\n&quot;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6740">while true</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6742">  l = Readline::readline('&gt; ')</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6744">  break if l.nil? or l.downcase == 'quit'</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6746">  Readline::HISTORY.push(l)</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6748">  if l.length &gt; 140</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6750">    puts &quot;ERROR: Message too long (#{l.length} bytes, max. 140)&quot;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6752">    next</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6754">  end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6756">  url = URI.parse(&quot;#{settings['apiroot']}statuses/update.xml&quot;)</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6758">  request = Net::HTTP::Post.new(url.path)</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6760">  request.basic_auth(settings['user'],settings['password'])</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6762">  request.set_form_data({'status'=&gt;l})</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6764">  request['User-Agent'] = USER_AGENT</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6766">  response = Net::HTTP.start(url.host, url.port) do |http|</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6768">    http.request(request)</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6770">  end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6772">  puts &quot;#{response.code} #{response.message}&quot;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6774">  # puts &quot;Body:\n---\n#{response.body}\n---\n&quot;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6776">end</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6778">puts &quot;\n\nThanks for using Lacopost!\n\n&quot;</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6780" /><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6782"># Local variables:</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6829"># mode:ruby</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6831"># End:</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6833"># jEdit:mode=ruby:indentSize=2:tabSize=2:noTabs:</flowPara><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6784" /><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6786" /><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6788" /><flowPara
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Inconsolata;-inkscape-font-specification:Inconsolata"
+         id="flowPara6790" /></flowRoot>  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Markers"
+     style="opacity:0.33000004"
+     sodipodi:insensitive="true">
+    <rect
+       style="opacity:1;fill:#e9afaf;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6817"
+       width="403.48285"
+       height="299.10623"
+       x="16.766481"
+       y="26.113913" />
+    <rect
+       style="opacity:1;fill:#ffff00;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6813"
+       width="97.452148"
+       height="14.448702"
+       x="10.332812"
+       y="9.657443" />
+    <rect
+       style="opacity:1;fill:#c83737;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6815"
+       width="282.16226"
+       height="14.685341"
+       x="29.633816"
+       y="291.26031" />
+    <rect
+       style="opacity:1;fill:#008080;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6819"
+       width="136.02611"
+       height="65.166206"
+       x="15.847384"
+       y="332.56284" />
+    <rect
+       style="opacity:1;fill:#008080;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6821"
+       width="277.5668"
+       height="78.015877"
+       x="13.090098"
+       y="404.15387" />
+    <rect
+       style="opacity:1;fill:#ff6600;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6823"
+       width="547.78082"
+       height="552.53595"
+       x="16.766481"
+       y="488.5946" />
+    <rect
+       style="opacity:1;fill:#88aa00;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6825"
+       width="434.73209"
+       height="48.645191"
+       x="15.847384"
+       y="1046.6376" />
+    <rect
+       style="opacity:1;fill:#677821;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6827"
+       width="339.14618"
+       height="36.713352"
+       x="14.928289"
+       y="1100.7897" />
+    <rect
+       style="opacity:1;fill:#aa4400;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6835"
+       width="542.00299"
+       height="17.847586"
+       x="21.604971"
+       y="880.4317" />
+    <rect
+       style="opacity:1;fill:#008000;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6837"
+       width="356.01236"
+       height="54.482101"
+       x="26.301704"
+       y="1191.3555" />
+    <rect
+       style="opacity:1;fill:#ff0000;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6839"
+       width="344.7402"
+       height="108.9642"
+       x="25.362358"
+       y="1247.7163" />
+    <rect
+       style="opacity:1;fill:#008000;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6841"
+       width="261.13834"
+       height="25.362358"
+       x="25.362358"
+       y="1360.4379" />
+    <rect
+       style="opacity:1;fill:#677821;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6843"
+       width="247.9875"
+       height="15.029546"
+       x="15.029546"
+       y="1402.7084" />
+    <rect
+       style="opacity:1;fill:#ffff00;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6845"
+       width="278.98593"
+       height="57.30014"
+       x="15.968892"
+       y="1429.0101" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Crankery">
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="467.79462"
+       y="34.080467"
+       id="text7622"><tspan
+         sodipodi:role="line"
+         id="tspan7624"
+         x="467.79462"
+         y="34.080467">This thing is here just to tell the command interpreter this is a</tspan><tspan
+         sodipodi:role="line"
+         x="467.79462"
+         y="54.080467"
+         id="tspan7626">Ruby program. Dead weight, otherwise.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="492.45416"
+       y="155.58185"
+       id="text7628"><tspan
+         sodipodi:role="line"
+         id="tspan7630"
+         x="492.45416"
+         y="155.58185">And here's some helpful comments. Whee, we tell the user</tspan><tspan
+         sodipodi:role="line"
+         x="492.45416"
+         y="175.58185"
+         id="tspan7632">what this program is. And here, we also tell how to get in touch</tspan><tspan
+         sodipodi:role="line"
+         x="492.45416"
+         y="195.58185"
+         id="tspan7634">with me and under what terms you can distribute this program.</tspan><tspan
+         sodipodi:role="line"
+         x="492.45416"
+         y="215.58185"
+         id="tspan7636">What fun! Useful information? Maybe a little bit.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="509.12585"
+       y="272.6745"
+       id="text7638"><tspan
+         sodipodi:role="line"
+         id="tspan7640"
+         x="509.12585"
+         y="272.6745">This little widget is probably useless to you. it tells me when this</tspan><tspan
+         sodipodi:role="line"
+         x="509.12585"
+         y="292.6745"
+         id="tspan7642">file was last modified.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="205.7169"
+       y="366.60913"
+       id="text7644"><tspan
+         sodipodi:role="line"
+         id="tspan7646"
+         x="205.7169"
+         y="366.60913">And here we need some boring code libraries. Yawn.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="349.43692"
+       y="431.42407"
+       id="text7648"><tspan
+         sodipodi:role="line"
+         id="tspan7650"
+         x="349.43692"
+         y="431.42407">A few constant values that might actually be used somewhere.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="608.69659"
+       y="534.7522"
+       id="text7652"><tspan
+         sodipodi:role="line"
+         id="tspan7654"
+         x="608.69659"
+         y="534.7522">Now we come to the interesting part. As you can see,</tspan><tspan
+         sodipodi:role="line"
+         x="608.69659"
+         y="554.7522"
+         id="tspan7656">the vast majority of this program is devoted to this</tspan><tspan
+         sodipodi:role="line"
+         x="608.69659"
+         y="574.7522"
+         id="tspan7658">very <tspan
+   style="font-weight:bold;-inkscape-font-specification:DejaVu Sans Bold"
+   id="tspan7699">very</tspan> important part of this program. Very high</tspan><tspan
+         sodipodi:role="line"
+         x="608.69659"
+         y="594.7522"
+         id="tspan7660">profile, very remarkable, very integral to the operation</tspan><tspan
+         sodipodi:role="line"
+         x="608.69659"
+         y="614.7522"
+         id="tspan7662">of this horrible little program of mine. It is a very</tspan><tspan
+         sodipodi:role="line"
+         x="608.69659"
+         y="634.7522"
+         id="tspan7664">important part of any program, as a matter of fact.</tspan><tspan
+         sodipodi:role="line"
+         x="608.69659"
+         y="654.7522"
+         id="tspan7666">...It handles the settings. <tspan
+   style="font-weight:bold;-inkscape-font-specification:DejaVu Sans Bold;font-size:22"
+   id="tspan7693">YES, SETTINGS.</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="608.69659"
+         y="674.7522"
+         id="tspan7672">Ordinary logic says that settings are easy, but to</tspan><tspan
+         sodipodi:role="line"
+         x="608.69659"
+         y="694.7522"
+         id="tspan7674">make the settings easily changeable and manageable</tspan><tspan
+         sodipodi:role="line"
+         x="608.69659"
+         y="714.7522"
+         id="tspan7676">and not hard-coded, you need to devote A LOT</tspan><tspan
+         sodipodi:role="line"
+         x="608.69659"
+         y="774.7522"
+         id="tspan7686">of stuff for storing user preferences.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="599.3031"
+       y="879.49237"
+       id="text7705"><tspan
+         sodipodi:role="line"
+         id="tspan7707"
+         x="599.3031"
+         y="879.49237">And here's a silly misdesigned part that I couldn't</tspan><tspan
+         sodipodi:role="line"
+         x="599.3031"
+         y="899.49237"
+         id="tspan7709">remove, because the readline library doesn't have</tspan><tspan
+         sodipodi:role="line"
+         x="599.3031"
+         y="919.49237"
+         id="tspan7711">anything like this and I was too lazy to do this properly</tspan><tspan
+         sodipodi:role="line"
+         x="599.3031"
+         y="939.49237"
+         id="tspan7713">since the script is just for my use and you only need</tspan><tspan
+         sodipodi:role="line"
+         x="599.3031"
+         y="959.49237"
+         id="tspan7715">to configure the program once anyway.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="541.06366"
+       y="1062.6649"
+       id="text7717"><tspan
+         sodipodi:role="line"
+         id="tspan7719"
+         x="541.06366"
+         y="1062.6649">Here's a bit of COMPLETELY USELESS but neat code.</tspan><tspan
+         sodipodi:role="line"
+         x="541.06366"
+         y="1082.6649"
+         id="tspan7721">It makes the terminal window have a cool changed title when</tspan><tspan
+         sodipodi:role="line"
+         x="541.06366"
+         y="1102.6649"
+         id="tspan7723">this program is running.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="427.40271"
+       y="1137.8127"
+       id="text7725"><tspan
+         sodipodi:role="line"
+         id="tspan7727"
+         x="427.40271"
+         y="1137.8127">Ultimately useless - but quite kind - soft-squishy-helpy-kindness user help...</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="361.64844"
+       y="1175.3866"
+       id="text7729"><tspan
+         sodipodi:role="line"
+         id="tspan7731"
+         x="361.64844"
+         y="1175.3866">Oooh! This program has actual error handling!</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="336.2861"
+       y="1427.1313"
+       id="text7733"><tspan
+         sodipodi:role="line"
+         id="tspan7735"
+         x="336.2861"
+         y="1427.1313">Here we actually report back to the user what this program succeeds in doing.</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="442.20251"
+       y="1218.5964"
+       id="text2790"><tspan
+         sodipodi:role="line"
+         id="tspan2792"
+         x="442.20251"
+         y="1218.5964">And here's the most surprising part of the program, the part that</tspan><tspan
+         sodipodi:role="line"
+         x="442.20251"
+         y="1238.5964"
+         id="tspan2794">you might have even missed if I hadn't pointed it out to you:</tspan><tspan
+         sodipodi:role="line"
+         x="442.20251"
+         y="1270.5574"
+         id="tspan2796"
+         style="font-size:28px;font-weight:bold;-inkscape-font-specification:DejaVu Sans Bold">THE PART OF THE PROGRAM THAT</tspan><tspan
+         sodipodi:role="line"
+         x="442.20251"
+         y="1305.5574"
+         style="font-size:28px;font-weight:bold;-inkscape-font-specification:DejaVu Sans Bold"
+         id="tspan2818">ACTUALLY DOES SOMETHING USEFUL.</tspan><tspan
+         sodipodi:role="line"
+         x="442.20251"
+         y="1328.5964"
+         id="tspan2798">We have the user name and password, website API location, and</tspan><tspan
+         sodipodi:role="line"
+         x="442.20251"
+         y="1348.5964"
+         id="tspan2800">message - now we need to post it to the site! Often, in programming,</tspan><tspan
+         sodipodi:role="line"
+         x="442.20251"
+         y="1368.5964"
+         id="tspan2802">the hard part isn't doing the thing itself; the hard part is to <tspan
+   style="font-weight:bold"
+   id="tspan2814">figure out</tspan></tspan><tspan
+         sodipodi:role="line"
+         x="442.20251"
+         y="1388.5964"
+         id="tspan2808"><tspan
+   style="font-weight:bold"
+   id="tspan2810">what to do</tspan> and <tspan
+   style="font-weight:bold"
+   id="tspan2812">how to avoid the mistakes</tspan>!</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="337.22543"
+       y="1460.948"
+       id="text2820"><tspan
+         sodipodi:role="line"
+         id="tspan2822"
+         x="337.22543"
+         y="1460.948">Here I've stored settings for two different text editors. In different formats, logically -</tspan><tspan
+         sodipodi:role="line"
+         x="337.22543"
+         y="1480.948"
+         id="tspan2824">not everyone follows Emacs' lead.</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;opacity:0.5"
+       d="M 381.37473,159.9529 C 403.65036,149.34924 428.06114,146.01642 445.61568,145.89002 C 463.17022,145.76362 464.60809,145.88568 483.76351,156.32508"
+       id="path2826"
+       sodipodi:nodetypes="czc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#Arrow1Lstart);opacity:0.5"
+       d="M 118.35767,21.868955 C 120.4547,22.471782 163.69848,36.057372 215.18605,37.837847 C 269.51387,39.71654 334.6189,5.9567179 463.09787,18.111568"
+       id="path4887"
+       sodipodi:nodetypes="czc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;opacity:0.5"
+       d="M 320.78686,297.33304 C 345.88053,304.57697 395.72468,312.76621 432.93449,302.05709 C 469.27596,291.59788 478.2286,287.0232 498.32337,277.73633"
+       id="path5405"
+       sodipodi:nodetypes="czc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;opacity:0.5"
+       d="M 141.37166,370.13101 C 163.64729,380.73467 188.05807,384.06749 205.61261,384.19389 C 223.16715,384.32029 224.60502,384.19823 243.76044,373.75883"
+       id="path5407"
+       sodipodi:nodetypes="czc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;opacity:0.5"
+       d="M 281.3343,457.91944 C 306.42797,465.16337 356.27212,473.35261 393.48193,462.64349 C 429.8234,452.18428 438.77604,447.6096 458.87081,438.32273"
+       id="path5409"
+       sodipodi:nodetypes="czc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none;marker-start:url(#Arrow1Lstart);opacity:0.5"
+       d="M 493.15695,542.26696 C 507.45594,517.20544 523.95813,494.89716 556.09317,494.36028 C 566.1481,496.0361 580.06482,504.21976 569.24403,514.08656 C 557.90069,524.42984 547.63906,514.88949 547.63906,502.8144 C 547.63906,490.73931 553.42808,481.74245 565.48664,479.33074 C 595.16201,476.53529 598.38214,496.18631 613.39332,512.20787"
+       id="path5411"
+       sodipodi:nodetypes="cczzcc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;opacity:0.5"
+       d="M 496.81529,878.6865 C 509.75914,867.1814 536.06606,850.43327 557.32275,854.49569 C 578.08338,858.4633 583.38988,861.40824 595.2063,867.05204"
+       id="path5929"
+       sodipodi:nodetypes="czc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;opacity:0.5"
+       d="M 419.41826,1053.5809 C 420.14965,1052.4004 433.31168,1020.2556 453.18947,1022.3085 C 472.13759,1024.2654 476.99693,1067.8341 539.65463,1060.9391"
+       id="path5931"
+       sodipodi:nodetypes="czc" />
+    <path
+       style="opacity:0.5;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.5;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 335.55516,1114.531 C 356.10809,1105.8299 397.36596,1094.7314 429.34108,1103.2275 C 460.57002,1111.5255 468.40279,1115.5628 485.91537,1123.6461"
+       id="path5933"
+       sodipodi:nodetypes="czc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;opacity:0.5"
+       d="M 267.82559,1203.4001 C 277.19316,1188.8344 298.01829,1165.6208 319.58374,1163.8092 C 340.6459,1162.0397 346.5494,1163.4469 359.44911,1165.7002"
+       id="path5935"
+       sodipodi:nodetypes="czc" />
+    <path
+       style="opacity:0.5;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.25;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);stroke-miterlimit:4;stroke-dasharray:3.75, 1.25;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 353.42744,1301.3105 C 378.92056,1290.9996 410.21417,1288.6523 421.62263,1266.5546 C 427.68211,1237.8202 395.88864,1260.7683 401.89635,1236.4955 C 410.99444,1223.4012 421.97583,1215.882 438.53087,1217.7086"
+       id="path5937"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;opacity:0.5"
+       d="M 280.38749,1371.2281 C 294.65008,1367.2539 324.25107,1356.0953 343.29717,1371.4073 C 361.8988,1386.362 364.40669,1401.4148 374.34887,1413.1473"
+       id="path6974"
+       sodipodi:nodetypes="czc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;marker-start:url(#Arrow1Lstart);marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;opacity:0.5"
+       d="M 229.67023,1457.426 C 251.94586,1446.8224 276.35664,1443.4896 293.91118,1443.3632 C 311.46572,1443.2368 312.90359,1443.3588 332.05901,1453.7982"
+       id="path6976"
+       sodipodi:nodetypes="czc" />
+  </g>
+</svg>
