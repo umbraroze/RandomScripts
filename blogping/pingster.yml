@@ -1,0 +1,25 @@
+services:
+  userland:
+    name: Weblogs.com
+    rpcurl: http://rpc.weblogs.com/RPC2
+    type: extended
+  technorati:
+    name: Technorati
+    rpcurl: http://rpc.technorati.com/rpc/ping
+    type: extended
+blogs:
+  avarthrel:
+    name: Avarthrel Blog
+    url: http://www.beastwithin.org/users/wwwwolf/fantasy/avarthrel/blog/
+    changes: http://www.beastwithin.org/users/wwwwolf/fantasy/avarthrel/blog/
+    feed: http://www.beastwithin.org/users/wwwwolf/fantasy/avarthrel/blog/index.atom
+  gamelessgame:
+    name: Gameless Game
+    url: http://www.beastwithin.org/gamelessgame/
+    changes: http://www.beastwithin.org/gamelessgame/
+    feed: http://www.beastwithin.org/gamelessgame/index.atom
+  lifelessjournal:
+    name: WWWWolf's LifelessJournal
+    url: http://wwwwolf.livejournal.com/
+    changes: http://wwwwolf.livejournal.com/
+    feed: http://wwwwolf.livejournal.com/data/atom
