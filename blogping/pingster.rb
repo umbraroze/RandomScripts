@@ -15,7 +15,12 @@ def pingablog(p,svc)
     $services.keys.each do |sv|
       s = $services[sv]
       server = XMLRPC::Client.new2(s['rpcurl'])
-      result = server.call("weblogUpdates.extendedPing", p['name'], p['url'], p['changes'], p['feed'])
+      result = nil
+      begin
+        result = server.call("weblogUpdates.extendedPing", p['name'], p['url'], p['changes'], p['feed'])
+      rescue
+        result = {'message' => "XML-RPC call failed: #{$!}"}
+      end
       puts " ... on #{s['name']}: #{result['message']}"
     end
   end
