@@ -1,0 +1,50 @@
+#!/usr/bin/python
+# My overcomplex quake map builder.
+# $Id$
+
+import sys
+import os
+from getopt import gnu_getopt
+import warnings
+
+do_clean = True
+light = True
+wad_directory = '/usr/local/games/quake/id1'
+basename = None
+qbsp_binary = 'qfbsp'
+light_binary = 'qflight'
+vis_binary = 'qfvis'
+
+(opts,args)=gnu_getopt(sys.argv[1:],'Lw:C',
+                       ['no-light','wad-directory','no-clean'])
+for o in opts:
+    if o[0] == '-L' or o[0] == '--no-light':
+        light = False
+    if o[0] == '-w' or o[0] == '--wad-directory':
+        wad_directory = o[1]
+    if o[0] == '-C' or o[0] == '--no-clean':
+        do_clean = False
+if len(args) == 1:
+    basename = args[0]
+if len(args) > 1:
+    raise RuntimeError('Too many names.')
+if basename == None:
+    raise RuntimeError('Basename not given.')
+
+print "\n\nBuilding map %s.map\n\n" % basename
+
+print "\n\n>>> Building BSP:\n\n"
+os.system("%s -w '%s' '%s.map'" % (qbsp_binary,wad_directory,basename))
+
+if light:
+    print "\n\n>>> Lighting:\n\n"
+    os.system("%s '%s.bsp'" % (light_binary,basename))
+else:
+    print "\n\n>>> Skipping light step\n\n"
+
+print "\n\n>>> Visibility:\n\n"
+os.system("%s '%s.bsp'" % (vis_binary,basename))
+
+if do_clean:
+    for ext in ['bak','h1','h2','lit','prt','autosave.map']:
+        os.system("rm -f '%s.%s'" % (basename,ext))
