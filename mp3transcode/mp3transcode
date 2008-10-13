@@ -1,0 +1,14 @@
+#!/bin/sh
+
+inputfile="$1"
+outputfile="$2"
+title="$3"
+artist="$4"
+
+ffmpeg -i "$inputfile" output.wav
+lame --preset cbr 64 output.wav
+mv output.wav.mp3 "$outputfile"
+mp3info -t "$title" -a "$artist" "$outputfile"
+rm output.wav
+
+
