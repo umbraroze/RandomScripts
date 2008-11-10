@@ -82,19 +82,22 @@ while(<>) {
     # ISO date
     s{(\d\d\d\d)-(\d\d)-(\d\d)}{
        to_ord($3) . " " . to_month($2) . "ta " . $1
-    }ex;
+    }gex;
     # Finnish/European date
     s{(\d\d)\.(\d\d)\.(\d\d\d\d)}{
        to_ord($1) . " " . to_month($2) . "ta " . $3
-    }ex;
+    }gex;
     # Ordinals
     s{\s+(\d+)\.\s+}{
        " " . to_ord($1) . " "
-    }ex;
+    }gex;
     # Bible verse (should do book name expansions too)
+    s{\b(\d+):(\d+\-\d+)\b}{
+	"luku " . $1 . " jakeet " . $2
+    }gex;
     s{\b(\d+):(\d+)\b}{
 	"luku " . $1 . " jae " . $2
-    }ex;
+    }gex;
     # Lines
     s{[-_=]{4,}}{vaakaviiva};
     print;
