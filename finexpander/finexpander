@@ -1,0 +1,101 @@
+#!/usr/bin/perl
+# Performs some expansions for source text that Suopuhe doesn't handle yet.
+# $Id$
+
+use strict;
+use warnings;
+
+sub to_ord ($) {
+    $_ = shift;
+    my %teen = (
+	11 => 'yhdestoista',
+	12 => 'kahdestoista',
+	13 => 'kolmastoista',
+	14 => 'neljästoista',
+	15 => 'viidestoista',
+	16 => 'kuudestoista',
+	17 => 'seitsemästoista',
+	18 => 'kahdeksastoista',
+	19 => 'yhdeksästoista',
+	);
+    if($_ >= 11 and $_ <= 19) {
+	return $teen{$_};
+    }
+    $_ = "" . $_; # we need strings henceforth
+    my @n = ('ensimmäinen',
+	     'kahdes',
+	     'kolmas',
+	     'neljäs',
+	     'viides',
+	     'kuudes',
+	     'seitsemäs',
+	     'kahdeksas',
+	     'yhdeksäs');
+    if(length($_) > 5) {
+	return "helvetin iso numero";
+    }
+    $_ = sprintf("%05d",$_);
+    my ($ones, $tens, $hundreds, $thousands, $tenthousands) =
+	reverse split //, $_;
+    $_ = "";
+    if($tenthousands > 0) {
+	$_ .= ($tenthousands > 1 ? $n[$tenthousands - 1] : "") . "kymmenestuhannes";
+    }
+    if($thousands > 0) {
+	$_ .= ($thousands > 1 ? $n[$thousands - 1] : "") . "tuhannes";
+    }
+    if($hundreds > 0) {
+	$_ .= ($hundreds > 1 ? $n[$hundreds - 1] : "") . "sadas";
+    }
+    if($tens > 0) {
+	$_ .= ($tens > 1 ? $n[$tens - 1] : "") . "kymmenes";
+    }
+    if($ones > 0) {
+	if($ones == 2) {
+	    $_ .= "toinen";
+	} else {
+	    $_ .= $n[$ones - 1];
+	}
+    }
+
+    return $_;
+    
+}
+sub to_month ($) {
+    $_ = shift;
+    my @months = ('tammikuu',
+		  'helmikuu',
+		  'maaliskuu',
+		  'huhtikuu',
+		  'toukokuu',
+		  'kesäkuu',
+		  'heinäkuu',
+		  'elokuu',
+		  'syyskuu',
+		  'lokakuu',
+		  'marraskuu',
+		  'joulukuu');
+    return $months[$_-1];
+}
+
+while(<>) {
+    # ISO date
+    s{(\d\d\d\d)-(\d\d)-(\d\d)}{
+       to_ord($3) . " " . to_month($2) . "ta " . $1
+    }ex;
+    # Finnish/European date
+    s{(\d\d)\.(\d\d)\.(\d\d\d\d)}{
+       to_ord($1) . " " . to_month($2) . "ta " . $3
+    }ex;
+    # Ordinals
+    s{\s+(\d+)\.\s+}{
+       " " . to_ord($1) . " "
+    }ex;
+    # Bible verse (should do book name expansions too)
+    s{\b(\d+):(\d+)\b}{
+	"luku " . $1 . " jae " . $2
+    }ex;
+    # Lines
+    s{[-_=]{4,}}{vaakaviiva};
+    print;
+}
