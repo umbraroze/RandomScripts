@@ -26,19 +26,22 @@ require 'yaml/store'
 require 'net/http'
 require 'uri'
 
-LACOPOST_VERSION = '0.0'
+LACOPOST_VERSION = '0.2'
 SETTINGS_FILE = "#{ENV['HOME']}/.lacopost"
 DEFAULT_API_ROOT = 'http://identi.ca/api/'
 USER_AGENT = "Lacopost/#{LACOPOST_VERSION} "+
   "(#{RUBY_PLATFORM}; Ruby/#{RUBY_VERSION})"
 
-def create_settings_file(user,password,apiroot=DEFAULT_API_ROOT)
+def create_settings_file(acctname,user,password,apiroot=DEFAULT_API_ROOT)
   store = YAML::Store.new(SETTINGS_FILE)
   store.transaction do
-    store['settings'] = {
-      'user' => user,
-      'password' => password,
-      'apiroot' => apiroot
+    store['default_account'] = acctname
+    store['accounts'] = {
+      acctname => {
+        'user' => user,
+        'password' => password,
+        'apiroot' => apiroot
+      }
     }
   end
   File.chmod(0600,SETTINGS_FILE)
@@ -47,16 +50,41 @@ def read_settings
   settings = {}
   store = YAML::Store.new(SETTINGS_FILE)
   store.transaction do
-    settings = store['settings']
+    settings['default_account'] = store['default_account']
+    settings['accounts'] = store['accounts']
   end
   return settings
+end
+def post_message(msg,settings)
+  if msg.length > 140
+    puts "ERROR: Message too long (#{msg.length} bytes, max. 140)"
+    next
+  end
+  url = URI.parse("#{settings['apiroot']}statuses/update.xml")
+  ### Debug
+  ##puts "Would post \"#{msg}\" to #{url} as user #{settings['user']}"
+  ##return
+  ### EndDebug
+  request = Net::HTTP::Post.new(url.path)
+  request.basic_auth(settings['user'],settings['password'])
+  request.set_form_data({'status'=>msg})
+  request['User-Agent'] = USER_AGENT
+  response = Net::HTTP.start(url.host, url.port) do |http|
+    http.request(request)
+  end
+  puts "#{response.code} #{response.message}"
+  # puts "Body:\n---\n#{response.body}\n---\n"
 end
 
 Readline::emacs_editing_mode
 unless File.exists?(SETTINGS_FILE)
   puts "Lacopost must be configured first. To reconfigure, edit or delete"
   puts "the settings file, #{SETTINGS_FILE}."
+  accountname = nil
   username = nil
+  while accountname.nil? or accountname.length == 0
+    accountname = Readline::readline('Alias for this account: ')
+  end
   while username.nil? or username.length == 0
     username = Readline::readline('User name: ')
   end
@@ -68,34 +96,46 @@ unless File.exists?(SETTINGS_FILE)
   if apiroot.nil? or apiroot.length == 0
     apiroot = DEFAULT_API_ROOT
   end
-  create_settings_file(username,password,apiroot)
+  create_settings_file(accountname,username,password,apiroot)
+  puts "Configuration done. Please see that #{SETTINGS_FILE} is in order"
+  puts "and rerun the program."
+  exit
 end
 settings = read_settings
+current_account = settings['default_account']
 
 if ENV.has_key?('TERM') and ENV['TERM'] =~ /xterm/
-	print "\033]0;Lacopost #{LACOPOST_VERSION} - #{settings['apiroot']}\007"
+  print "\033]0;Lacopost #{LACOPOST_VERSION} - #{settings['apiroot']}\007"
 end
 
 puts "\nWelcome to Lacopost #{LACOPOST_VERSION}."
-puts "Type 'quit' or press Ctrl+D to end the session.\n\n"
+puts "Type '%accountname' to switch accounts. (Currently #{current_account}.)"
+puts "Type '/list' to list accounts."
+puts "Type '/quit' or press Ctrl+D to end the session.\n\n"
 while true
   l = Readline::readline('> ')
-  break if l.nil? or l.downcase == 'quit'
+  # Handle quits before other commands
+  break if l.nil? or l.downcase == '/quit'
+  # ...because all other commands are historic.
   Readline::HISTORY.push(l)
-  if l.length > 140
-    puts "ERROR: Message too long (#{l.length} bytes, max. 140)"
+  if l.downcase == '/list'
+    settings['accounts'].keys.sort.each do |a|
+      puts " - #{a}"
+    end
     next
   end
-  url = URI.parse("#{settings['apiroot']}statuses/update.xml")
-  request = Net::HTTP::Post.new(url.path)
-  request.basic_auth(settings['user'],settings['password'])
-  request.set_form_data({'status'=>l})
-  request['User-Agent'] = USER_AGENT
-  response = Net::HTTP.start(url.host, url.port) do |http|
-    http.request(request)
+  if l =~ /%(.*)$/
+    if not settings['accounts'].has_key?($1)
+      puts "Invalid account #{$1}."
+    else
+      current_account = $1
+      puts "Swiched to account #{current_account}."
+    end
+    next
   end
-  puts "#{response.code} #{response.message}"
-  # puts "Body:\n---\n#{response.body}\n---\n"
+  
+  # OK, it's a message. Time to post it.
+  post_message(l,settings['accounts'][current_account])
 end
 puts "\n\nThanks for using Lacopost!\n\n"
 
