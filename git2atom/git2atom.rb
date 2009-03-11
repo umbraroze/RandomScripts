@@ -23,22 +23,23 @@ repo = nil
 
 OptionParser.new do |opts|
   opts.banner = "Usage: git2atom.rb [options] repository"
-  opts.on("-t", "--title", "Feed title") do |x|
+  opts.on("-t", "--title TITLE", "Feed title") do |x|
     title = x
   end
-  opts.on("-i", "--id", "Feed ID") do |x|
+  opts.on("-i", "--id URI", "Feed ID") do |x|
     id = x
   end
-  opts.on("-s", "--self", "Feed self link URL") do |x|
+  opts.on("-s", "--self URI", "Feed self link") do |x|
     self_url = x
   end
-  opts.on("-o", "--output-file", "File to store the feed to [default: updates.atom]") do |x|
+  opts.on("-o", "--output-file FILENAME", "File to store the feed to",
+          " [default: updates.atom]") do |x|
     output = x
   end
-  opts.on("-n", "--author-name", "Feed author name") do |x|
+  opts.on("-n", "--author-name NAME", "Feed author name") do |x|
     author['name'] = x
   end
-  opts.on("-e", "--author-email", "Feed author email") do |x|
+  opts.on("-e", "--author-email EMAIL", "Feed author email") do |x|
     author['email'] = x
   end
 end.parse!
