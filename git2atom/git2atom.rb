@@ -5,21 +5,49 @@
 # $Id$
 #####################################################################
 
-# Settings
-
-author = {
-	'name' => 'Urpo Lankinen',
-	'email' => 'wwwwolf@iki.fi'
-}
-title = "Recent updates to the Avarthrel site"
-id = "urn:wwwwolf:websitefeeds:avarthrelupdates"
-self_url = "http://www.iki.fi/wwwwolf/fantasy/avarthrel/updates.atom"
-output = "updates.atom"
-repo = "/data/scm/git/Avarthrel.git"
+require 'optparse'
+require 'rexml/document'
 
 #####################################################################
+# Options
 
-require 'rexml/document'
+author = {
+	'name' => 'Unset Name',
+	'email' => 'bogus@example.com'
+}
+title = "Recent git updates"
+id = "http://example.com/bogus/identity/url/"
+self_url = "http://example.com/bogus/feed.atom"
+output = "updates.atom"
+repo = nil
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: git2atom.rb [options] repository"
+  opts.on("-t", "--title", "Feed title") do |x|
+    title = x
+  end
+  opts.on("-i", "--id", "Feed ID") do |x|
+    id = x
+  end
+  opts.on("-s", "--self", "Feed self link URL") do |x|
+    self_url = x
+  end
+  opts.on("-o", "--output-file", "File to store the feed to [default: updates.atom]") do |x|
+    output = x
+  end
+  opts.on("-n", "--author-name", "Feed author name") do |x|
+    author['name'] = x
+  end
+  opts.on("-e", "--author-email", "Feed author email") do |x|
+    author['email'] = x
+  end
+end.parse!
+
+fail "need repository name" if ARGV.length == 0
+repo = ARGV.shift
+
+#####################################################################
+# The rest of the program
 
 atomdoc = REXML::Document.new <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
