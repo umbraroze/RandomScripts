@@ -20,6 +20,7 @@ id = "http://example.com/bogus/identity/url/"
 self_url = "http://example.com/bogus/feed.atom"
 output = "updates.atom"
 repo = nil
+also_ignore = nil
 
 OptionParser.new do |opts|
   opts.banner = "Usage: git2atom.rb [options] repository"
@@ -33,7 +34,7 @@ OptionParser.new do |opts|
     self_url = x
   end
   opts.on("-o", "--output-file FILENAME", "File to store the feed to",
-          " [default: updates.atom]") do |x|
+          "  [default: updates.atom]") do |x|
     output = x
   end
   opts.on("-n", "--author-name NAME", "Feed author name") do |x|
@@ -41,6 +42,10 @@ OptionParser.new do |opts|
   end
   opts.on("-e", "--author-email EMAIL", "Feed author email") do |x|
     author['email'] = x
+  end
+  opts.on("-I", "--ignore REGEX", "Do not include commits whose description",
+          "  matches this regular expression") do |x|
+    also_ignore = x
   end
 end.parse!
 
@@ -76,8 +81,17 @@ atomdoc.elements["/feed/updated"].text = current_time
 oldwd = Dir.getwd
 Dir.chdir(repo)
 entries = nil
-open("| git log -n10 --pretty=format:'%H|%ct|%s' | grep -v '|Merge branch'") do |f|
-	entries = f.gets(nil).split(/\n/).map{|l| l.split(/\|/,3)}
+open("| git log -n30 --pretty=format:'%H|%ct|%s' --no-merges") do |f|
+  entries = entries = f.gets(nil).split(/\n/)
+  unless(also_ignore.nil?)
+    entries = entries.delete_if do |x|
+      x =~ /#{also_ignore}/e
+    end
+  end
+  entries.collect! do |l|
+    l.split(/\|/,3)
+  end
+  entries = entries[0,10]
 end
 Dir.chdir(oldwd)
 
