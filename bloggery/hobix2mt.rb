@@ -1,7 +1,6 @@
 #!/usr/bin/ruby1.8
 # Hobix to Movable Type Export Format conversion script. Note: Does not deal
 # with tags.
-# $Id$
 
 require 'find'
 require 'yaml'

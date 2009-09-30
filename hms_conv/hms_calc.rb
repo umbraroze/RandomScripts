@@ -1,7 +1,6 @@
 #!/usr/bin/ruby
 # Project "time math sucks, so it's better to just do it once. Not sure if
 # I'll do it properly, but I do it."
-# $Id$
 
 class HMS
   def HMS.time(h,m,s)

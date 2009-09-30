@@ -1,6 +1,5 @@
 #!/usr/bin/perl
 # Performs some expansions for source text that Suopuhe doesn't handle yet.
-# $Id$
 
 use strict;
 use warnings;

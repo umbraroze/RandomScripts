@@ -1,5 +1,4 @@
 #!/usr/bin/ruby
-# $Id$
 
 require 'xmlrpc/client'
 require 'yaml'

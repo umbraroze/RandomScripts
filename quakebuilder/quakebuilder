@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # My overcomplex quake map builder.
-# $Id$
 
 import sys
 import os

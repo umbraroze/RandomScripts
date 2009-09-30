@@ -5,7 +5,6 @@
 # Feel free to use/modify/distribute how you want.
 # No warranty expressed or implied.
 # ===================================================================
-# $Id$
 # ===================================================================
 
 use strict;

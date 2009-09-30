@@ -1,5 +1,4 @@
 #!/usr/bin/ruby
-# $Id$
 # Dumps Amarok song database ratings to HTML file.
 # Good for recovering mysteriously mangled files.
 # By wwwwolf 2006-12-02. Do what the heck you want this with file. No warranty.

@@ -1,5 +1,4 @@
 #!/usr/bin/ruby
-# $Id$
 # I've probably written a script like this many times. This is one of them.
 
 str = ""

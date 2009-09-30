@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # WWWWolf's over-complex WLAN setup script. 2008-06-28
-# $Id$
 #
 # Config file, /root/.start-wlan, should have this stuff:
 #

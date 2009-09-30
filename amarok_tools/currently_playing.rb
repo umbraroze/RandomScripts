@@ -1,7 +1,6 @@
 #!/usr/bin/ruby
 # Print out the currently playing track from Amarok 2.0.
 # WWWWolf 2009-02-09 00:05
-# $Id$
 
 require 'dbus'
 
