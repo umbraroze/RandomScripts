@@ -5,6 +5,9 @@ require 'rubygems'
 gem('twitter4r', '>=0.3.0')
 require 'twitter'
 require 'optparse'
+require 'yaml'
+require 'yaml/store'
+require 'cgi'
 
 #######################################################################
 
@@ -39,6 +42,10 @@ OptionParser.new do |opts|
   end
 end.parse!
 
+if format == :html
+  fail "HTML format is currently unimplemented!"
+end
+
 fail "need user name" if ARGV.length == 0
 twitter_user = ARGV.shift
 
@@ -61,6 +68,8 @@ else
 end
 
 #######################################################################
+
+# Configure the client.
 Twitter::Client.configure do |conf|
   conf.protocol = :http
   conf.host = host
@@ -71,9 +80,67 @@ Twitter::Client.configure do |conf|
   conf.application_version = 'v1.0'
   conf.application_url = 'http://github.com/wwwwolf/randomscripts'
 end
-
 twitter = Twitter::Client.new
 
-public_timeline = twitter.timeline_for(:user, :id => twitter_user) do |status|
-  puts status.user.screen_name, status.text
+# Read in my cache and build entry hash
+entries = {}
+last_update = nil
+if File.exists?(cache_file)
+  e = YAML::load(File.open(cache_file))
+  entries = e['entries']
+  last_update = e['last_update']
+  STDERR.puts "Got #{entries.keys.length} entries from cache. Last update at #{last_update}."
+else
+  STDERR.puts "Cache file #{cache_file} not found, a new one will be created"
+end
+
+# Grab new entries.
+grabbed = 0
+tl = twitter.timeline_for(:user, :id => twitter_user, :since => last_update, :count => 100) do |status|
+  next if entries.has_key?(status.id)
+  entries[status.id] = {
+    'id' => status.id,
+    'time' => status.created_at,
+    'text' => status.text
+  }
+  grabbed += 1
+  if last_update.nil?
+    last_update = status.created_at
+  else
+    last_update = status.created_at if last_update >= status.created_at
+  end
+end
+
+STDERR.puts "Added #{grabbed} NEW entries out of #{tl.length} retrieved from #{twitter_user} at #{host}"
+
+# Save cache.
+File.delete(cache_file) if File.exists?(cache_file)
+cache = YAML::Store.new(cache_file)
+cache.transaction do
+  cache['entries'] = entries
+  cache['last_update'] = last_update
+end
+
+# Dump to the desired location
+o = nil
+if output_file.nil?
+  o = STDOUT
+else
+  o = File.open(output_file, 'w')
+end
+
+o.puts "|-"
+o.puts "! Text"
+o.puts "! Time"
+entries.keys.sort.each do |e|
+  # mediawiki format
+  en = entries[e]
+  o.puts "|-"
+  o.puts "| #{CGI.escapeHTML(en['text'])}"
+  o.puts "| #{CGI.escapeHTML(en['time'].utc.strftime('%d %B %Y, %H:%M UTC'))}"
+end
+o.puts "|-"
+
+unless output_file.nil?
+  o.close
 end
