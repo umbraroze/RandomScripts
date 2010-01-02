@@ -1,5 +1,37 @@
 #!/usr/bin/ruby1.8
 #######################################################################
+#
+# WWWWolf's Unremarkable Twitter Dump Script.
+# Copyright (C) 2010  Urpo Lankinen
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#######################################################################
+#
+# This will simply take 100 most recent tweets the user has posted,
+# cache them locally, and dump them out in MediaWiki format (HTML planned).
+#
+# Requires twitter4r RubyGem.
+#
+# Known issues:
+#  - Will download a shitton of tweets ANYWAY
+#  - Cutoff date handling may be buggy, or something
+#  - The host thing isn't very useful yet (identi.ca users are SOL), but
+#    this is twitter4r's fault AFAICT
+#  - Error handling isn't very graceful, but it shouldn't blow up too hard
+#
+#######################################################################
 
 require 'rubygems'
 gem('twitter4r', '>=0.3.0')
