@@ -53,8 +53,8 @@ class TwitFetcher
       conf.host = host
       conf.port = 80
 
-      conf.user_agent = 'WWWWolfsRandomTwitterDumpScript/1.0'
-      conf.application_name = 'WWWWolfsRandomTwitterDumpScript'
+      conf.user_agent = 'WWWWolfsTwitFetcher/1.0'
+      conf.application_name = 'TwitFetcher'
       conf.application_version = 'v1.0'
       conf.application_url = 'http://github.com/wwwwolf/randomscripts'
     end
