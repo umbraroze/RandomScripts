@@ -49,22 +49,17 @@ OptionParser.new do |opts|
     case x 
     when 'mediawiki' then format = :mediawiki
     when 'html' then format = :html
-    else
-      fail "Unknown format #{x}"
+    else fail "Unknown format #{x}"
     end
   end
 end.parse!
 
-if format == :html
-  fail "HTML format is currently unimplemented!"
-end
+fail "HTML format is currently unimplemented!" if format == :html
 
 fail "need user name" if ARGV.length == 0
 twitter_user = ARGV.shift
 
-if cache_file.nil?
-  cache_file = twitter_user + "_cache.yaml"
-end
+cache_file = twitter_user + "_cache.yaml" if cache_file.nil?
 
 STDERR.puts "User name: #{twitter_user}"
 STDERR.puts "Cache: #{cache_file}"
@@ -73,11 +68,11 @@ if output_file.nil?
 else
   STDERR.puts "Output: #{output_file}"
 end
+
 case format
 when :mediawiki then STDERR.puts "Format: MediaWiki"
 when :html then STDERR.puts "Format: HTML"
-else
-  fail "Unknown format somehow slipped past. This is weird!"
+else fail "Unknown format somehow slipped past. This is weird!"
 end
 
 #######################################################################
@@ -89,7 +84,6 @@ tf.save_cache(cache_file)
 
 STDERR.puts "Added #{tf.last_new_count} NEW entries out of #{tf.last_fetch_count} retrieved from #{twitter_user} at #{host}"
 
-
 # Dump to the desired location
 o = nil
 if output_file.nil?
@@ -97,9 +91,5 @@ if output_file.nil?
 else
   o = File.open(output_file, 'w')
 end
-
 o.puts tf.format(format)
-
-unless output_file.nil?
-  o.close
-end
+o.close unless output_file.nil?
