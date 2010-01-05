@@ -116,7 +116,6 @@ class TwitFetcher
     s <<  "! Text"
     s << "! Time"
     @entries.keys.sort.each do |e|
-      # mediawiki format
       en = @entries[e]
       s << "|-"
       s << "| #{CGI.escapeHTML(en['text'])}"
