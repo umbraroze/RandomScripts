@@ -113,13 +113,13 @@ class TwitFetcher
     fail "HTML is unimplemented" if fmt == :html
 
     s = "|-\n"
-    s <<  "! Text"
-    s << "! Time"
+    s <<  "! Text\n"
+    s << "! Time\n"
     @entries.keys.sort.each do |e|
       en = @entries[e]
-      s << "|-"
-      s << "| #{CGI.escapeHTML(en['text'])}"
-      s << "| #{CGI.escapeHTML(en['time'].utc.strftime('%d %B %Y, %H:%M UTC'))}"
+      s << "|-\n"
+      s << "| #{CGI.escapeHTML(en['text'])}\n"
+      s << "| #{CGI.escapeHTML(en['time'].utc.strftime('%d %B %Y, %H:%M UTC'))}\n"
     end
     s << "|-"
   end
