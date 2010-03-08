@@ -31,7 +31,6 @@
 
 require 'punymediawiki'
 require 'optparse'
-require 'pp'
 
 $api = 'http://en.wikipedia.org/w/api.php'
 $prefix = nil
@@ -61,7 +60,7 @@ $mw = MediaWikiClient.new($api)
 ns = $mw.get_namespaces
 image_ns = nil
 ns.each do |n|
-  if n['canonical'] == 'File' or n['canonical'] == 'Image'
+  if n['*'] == 'File' or n['*'] == 'Image'
     image_ns = n['id']
     break
   end
@@ -90,7 +89,7 @@ images.each do |i|
     # ...and put back the extension and add our target dir
     target_filename = "#{$outdir}#{target_filename}.#{ext}"
     # Okay, fetch it!
-    rescode = $mw.fetch_image_to(info['url'].chomp, target_filename, info['timestamp'].chomp)
-    puts " - #{info['url'].chomp} [#{info['timestamp'].chomp}] => #{target_filename} [#{rescode == '200' ? 'OK' : 'ERROR '+rescode}]"
+    rescode = $mw.fetch_image_to(info['url'], target_filename, info['timestamp'])
+    puts " - #{info['url'].chomp} [#{info['timestamp'].to_s.chomp}] => #{target_filename} [#{rescode == '200' ? 'OK' : 'ERROR '+rescode}]"
   end
 end

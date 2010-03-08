@@ -88,14 +88,24 @@ class MediaWikiClient
     r['query']['pages']
   end
   def fetch_image_to(url,target_file,timestamp)
+    # Check because the old version sometimes feeds us relative paths.
+    if(URI.parse(url).relative?)
+      h = URI.parse(@api_root)
+      h.path = url # Replace the path part with the one we were fed.
+      url = h.to_s
+    end
     req = WebRequest.new()
-    res = req.get_url(url)
+    res = req.get_url(url.chomp)
     return req.code if req.code != '200' # Bail out on error
     File.open(target_file,"w") do |f|
       f.write res
     end
     return req.code if timestamp.nil? # Skip the rest unless we want timestamps
-    ts = Time.utc(*ParseDate.parsedate(timestamp))
+    # NB: Timestamp is *sometimes* returned in ISO format, sometimes
+    # parsed automagically by YAML parser. (Logic is the developer's goal.
+    # Those developers may or may not be the ones developing these things.)
+    # Hence, .to_s added so chomping should work always.
+    ts = Time.utc(*ParseDate.parsedate(timestamp.to_s.chomp))
     File.utime(Time.now,ts,target_file)
     req.code
   end

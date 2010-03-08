@@ -47,7 +47,7 @@ $mw = MediaWikiClient.new($api)
 ns = $mw.get_namespaces
 image_ns = nil
 ns.each do |n|
-  if n['canonical'] == 'File' or n['canonical'] == 'Image'
+  if n['*'] == 'File' or n['*'] == 'Image'
     image_ns = n['id']
     break
   end
