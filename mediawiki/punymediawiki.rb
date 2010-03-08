@@ -24,6 +24,7 @@
 # Known issues:
 #  - It's puny.
 #  - It can blow up.
+#  - It won't fetch everything, probably.
 #
 #######################################################################
 
@@ -31,6 +32,7 @@ require 'yaml'
 require 'net/http'
 require 'uri'
 require 'cgi'
+require 'parsedate'
 
 class MediaWikiClient
   attr :api_root
@@ -40,9 +42,10 @@ class MediaWikiClient
     attr :cookie
     attr :body
     attr :content_type
+    attr :code
     def setup_req(url)
       @url = URI.parse(url)
-      @req = Net::HTTP::Get.new(@url.to_s) #FUCKSUPHERE
+      @req = Net::HTTP::Get.new(@url.to_s)
       @req['User-Agent'] = USER_AGENT
     end
     def get_url(url)
@@ -53,6 +56,7 @@ class MediaWikiClient
       @cookie = res['Set-Cookie']
       @body = res.body
       @content_type = res.content_type
+      @code = res.code
       @body
     end
     def initialize
@@ -70,13 +74,30 @@ class MediaWikiClient
     r['query']['namespaces']
   end
   def get_allpages(ns_id,prefix)
-    prefix = (prefix.nil? ? "" : "&apprefix=#{prefix}")
+    prefix = (prefix.nil? ? "" : "&apprefix=#{CGI.escape(prefix)}")
     imagelist = perform_query("action=query&list=allpages&apnamespace=#{ns_id}&aplimit=500#{prefix}")
     r = []
     imagelist['query']['allpages'].each do |i|
       r.push(i['title'].chomp)
     end
     r
+  end
+  def get_image_info(name,props)
+    p = (props.nil? ? "timestamp|user" : props)
+    r = perform_query("action=query&prop=imageinfo&titles=#{CGI.escape(name)}&iiprop=#{CGI.escape(p)}&iilimit=500")
+    r['query']['pages']
+  end
+  def fetch_image_to(url,target_file,timestamp)
+    req = WebRequest.new()
+    res = req.get_url(url)
+    return req.code if req.code != '200' # Bail out on error
+    File.open(target_file,"w") do |f|
+      f.write res
+    end
+    return req.code if timestamp.nil? # Skip the rest unless we want timestamps
+    ts = Time.utc(*ParseDate.parsedate(timestamp))
+    File.utime(Time.now,ts,target_file)
+    req.code
   end
   private
   def perform_query(query)
