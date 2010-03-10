@@ -46,18 +46,12 @@ class MediaWikiClient
   end
   def get_allpages(ns_id,prefix)
     imagelist = nil
-    if prefix.nil?
-      imagelist = YAML.load(mw.query(:list => :allpages,
-                                     :apnamespace => ns_id,
-                                     :aplimit => 500,
-                                     :format => :yaml))
-    else
-      imagelist = YAML.load(mw.query(:list => :allpages,
-                                     :apnamespace => ns_id,
-                                     :aplimit => 500,
-                                     :apprefix => prefix,
-                                     :format => :yaml))
-    end
+    parms = { :list => :allpages,
+      :apnamespace => ns_id,
+      :aplimit => 500,
+      :format => :yaml }
+    parms[:apprefix] = prefix unless prefix.nil?      
+    imagelist = YAML.load(mw.query(parms))
     r = []
     imagelist['query']['allpages'].each do |i|
       r.push(i['title'].chomp)
