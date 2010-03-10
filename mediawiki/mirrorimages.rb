@@ -1,7 +1,7 @@
 #!/usr/bin/ruby1.8
 #######################################################################
 #
-# WWWWolf's Unremarkable MediaWiki Page Lister
+# WWWWolf's Unremarkable MediaWiki Image Mirror Script
 # Copyright (C) 2010  Urpo Lankinen
 #
 # This program is free software: you can redistribute it and/or modify
@@ -32,14 +32,19 @@
 require 'punymediawiki'
 require 'optparse'
 
+$server = 'http://en.wikipedia.org/'
 $api = 'http://en.wikipedia.org/w/api.php'
 $prefix = nil
 $outdir = ""
 
 OptionParser.new do |opts|
   opts.banner = "Usage: lsimages.rb [options] [prefix]"
+  opts.on("-S", "--server URL", "Server URL whence you fetch stuff from.",
+          "  [default: #{$server} ]") do |x|
+    $server = x
+  end
   opts.on("-A", "--api URL", "API entry point for the wiki you want to list images on.",
-          "  [default: http://en.wikipedia.org/w/api.php ]") do |x|
+          "  [default: #{$api} ]") do |x|
     $api = x
   end
   opts.on("-d", "--output-directory DIR", "Store images in this directory.",
@@ -56,7 +61,7 @@ if $outdir != "" and not File.exists?($outdir)
   Dir.mkdir($outdir)
 end
 
-$mw = MediaWikiClient.new($api)
+$mw = MediaWikiClient.new($server,$api)
 ns = $mw.get_namespaces
 image_ns = nil
 ns.each do |n|

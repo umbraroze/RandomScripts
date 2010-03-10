@@ -31,19 +31,24 @@
 require 'punymediawiki'
 require 'optparse'
 
+$server = 'http://en.wikipedia.org/'
 $api = 'http://en.wikipedia.org/w/api.php'
 $prefix = nil
 
 OptionParser.new do |opts|
   opts.banner = "Usage: lsimages.rb [options] [prefix]"
+  opts.on("-S", "--server URL", "Server URL whence you fetch stuff from.",
+          "  [default: #{$server} ]") do |x|
+    $server = x
+  end
   opts.on("-A", "--api URL", "API entry point for the wiki you want to list images on.",
-          "  [default: http://en.wikipedia.org/w/api.php ]") do |x|
+          "  [default: #{$api} ]") do |x|
     $api = x
   end
 end.parse!
 $prefix = ARGV.pop if ARGV.length > 0
 
-$mw = MediaWikiClient.new($api)
+$mw = MediaWikiClient.new($server,$api)
 ns = $mw.get_namespaces
 image_ns = nil
 ns.each do |n|
