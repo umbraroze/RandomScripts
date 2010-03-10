@@ -29,7 +29,7 @@
 #
 #######################################################################
 
-require 'punymediawiki'
+require 'mediawiki_util'
 require 'optparse'
 
 $server = 'http://en.wikipedia.org/'
