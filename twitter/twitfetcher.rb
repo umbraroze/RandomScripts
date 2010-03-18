@@ -109,18 +109,42 @@ class TwitFetcher
   end
 
   def format(fmt)
-    fail "Unknown format" if (fmt != :html and fmt != :mediawiki)
-    fail "HTML is unimplemented" if fmt == :html
+    fail "Unknown format" unless [:html, :mediawiki,
+                                  :html_by_date,
+                                  :mediawiki_by_date].member?(fmt)
+    fail "HTML is unimplemented" if fmt == :html or fmt == :html_by_date
+    current_date = nil
+    datehead = "something bogus not equal to nil, dammit"
+    s = ""
 
-    s = "|-\n"
-    s <<  "! Text\n"
-    s << "! Time\n"
-    @entries.keys.sort.each do |e|
+    if fmt == :mediawiki
+      s = "|-\n"
+      s <<  "! Text\n"
+      s << "! Time\n"
+    end    
+    @entries.keys.sort.each do |e|      
       en = @entries[e]
+      datehead = en['time'].utc.strftime('%d %B %Y')
+      if fmt == :mediawiki_by_date and current_date != datehead
+        s << "|-\n|}\n\n" unless current_date.nil?
+        s << "=== #{CGI.escapeHTML(datehead)} ===\n\n"
+        s << "{| class=\"wikitable\"\n"
+        s << "|-\n"
+        s << "! Text\n"
+        s << "! Time\n"
+        current_date = datehead
+      end
       s << "|-\n"
       s << "| #{CGI.escapeHTML(en['text'])}\n"
-      s << "| #{CGI.escapeHTML(en['time'].utc.strftime('%d %B %Y, %H:%M UTC'))}\n"
+      if fmt == :mediawiki_by_date
+        d = en['time'].utc.strftime('%H:%M UTC')
+      else
+        d = en['time'].utc.strftime('%d %B %Y, %H:%M UTC')
+      end
+      s << "| #{CGI.escapeHTML(d)}\n"
     end
-    s << "|-"
+    s << "|-\n"
+    s << "|}\n" if fmt == :mediawiki_by_date
+    s
   end
 end

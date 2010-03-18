@@ -29,6 +29,7 @@ twitter_user = nil
 cache_file = nil
 output_file = nil
 format = :mediawiki
+date_sections = false
 
 OptionParser.new do |opts|
   opts.banner = "Usage: dump_account.rb [options] twitteruser"
@@ -44,6 +45,9 @@ OptionParser.new do |opts|
           "  [default: USERNAME_cache.yaml in current directory]") do |x|
     cache_file = x
   end
+  opts.on("-d", "--date-sections", "Produce sections by date.") do |x|
+    date_sections = true
+  end
   opts.on("-f", "--format FORMAT", "Output format. (mediawiki, html)",
           "  [default: mediawiki]") do |x|
     case x 
@@ -53,6 +57,12 @@ OptionParser.new do |opts|
     end
   end
 end.parse!
+if date_sections
+  case format
+  when :mediawiki then format = :mediawiki_by_date
+  when :html then format = :html_by_date
+  end
+end
 
 fail "HTML format is currently unimplemented!" if format == :html
 
@@ -72,6 +82,8 @@ end
 case format
 when :mediawiki then STDERR.puts "Format: MediaWiki"
 when :html then STDERR.puts "Format: HTML"
+when :mediawiki_by_date then STDERR.puts "Format: MediaWiki with date headings"
+when :html_by_date then STDERR.puts "Format: HTML with date headings"
 else fail "Unknown format somehow slipped past. This is weird!"
 end
 
