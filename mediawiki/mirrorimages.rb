@@ -94,6 +94,11 @@ images.each do |i|
     end
     # ...and put back the extension and add our target dir
     target_filename = "#{$outdir}#{target_filename}.#{ext}"
+    # Skip if already there
+    if File.exists?(target_filename)
+      puts " - #{info['url'].chomp} [#{info['timestamp'].to_s.chomp}] => #{target_filename} [Already exists!]"
+      next
+    end
     # Okay, fetch it!
     rescode = $mw.fetch_image_to(info['url'], target_filename, info['timestamp'])
     puts " - #{info['url'].chomp} [#{info['timestamp'].to_s.chomp}] => #{target_filename} [#{rescode == '200' ? 'OK' : 'ERROR '+rescode}]"
