@@ -75,7 +75,7 @@ fail "Couldn't find image namespace!" if image_ns.nil?
 images = $mw.get_allpages(image_ns,$prefix)
 images.each do |i|
   puts "\n#{i}"
-  imageinfo = $mw.get_image_info(i,'timestamp|url')
+  imageinfo = $mw.get_image_info(i,'timestamp|url|user')
   imagerevisions = imageinfo[0]['imageinfo']
   next if imagerevisions.length == 0 # Page exists, but no uploaded images
   many_uploads = false
@@ -89,7 +89,8 @@ images.each do |i|
     # Add timestamps to the file name ends if there's multiple revisions
     if many_uploads
       ts = MediaWikiClient.parse_date(info['timestamp']).strftime("%Y-%m-%d_%H%M%S")
-      target_filename = "#{target_filename}_#{ts}"
+      user = info['user'].chomp
+      target_filename = "#{target_filename}_#{ts}_#{user}"
     end
     # ...and put back the extension and add our target dir
     target_filename = "#{$outdir}#{target_filename}.#{ext}"
