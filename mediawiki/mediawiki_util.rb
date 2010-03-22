@@ -64,15 +64,17 @@ class MediaWikiClient
                        :titles => name,
                        :iiprop => props,
                        :iilimit => 500,
+                       :iihistory => true,
                        :format => :yaml))['query']['pages']
   end
   def fetch_image_to(url,target_file,timestamp)
-    u = URI.parse(url)
+    u = URI.parse(url.chomp)
     # Check because the old version sometimes feeds us relative paths.
     if(u.relative?)
       u = URI.parse(@api_root) # Take the MW host.
-      u.path = url # Replace the path part with the one we were fed.
+      u.path = url.chomp # Replace the path part with the one we were fed.
     end
+    #puts ">>> Fetching #{u.to_s}"
     res = Net::HTTP.start(u.host, u.port) do |http|
       http.get(u.path)
     end
@@ -82,13 +84,16 @@ class MediaWikiClient
       f.write res.body
     end
     return res.code if timestamp.nil? # Skip the rest unless we want timestamps
+
+    File.utime(Time.now,MediaWikiClient.parse_date(timestamp),target_file)
+    res.code
+  end
+  def MediaWikiClient.parse_date(datestr)
     # NB: Timestamp is *sometimes* returned in ISO format, sometimes
     # parsed automagically by YAML parser. (Logic is the developer's goal.
     # Those developers may or may not be the ones developing these things.)
     # Hence, .to_s added so chomping should work always.
-    ts = Time.utc(*ParseDate.parsedate(timestamp.to_s.chomp))
-    File.utime(Time.now,ts,target_file)
-    res.code
+    Time.utc(*ParseDate.parsedate(datestr.to_s.chomp))
   end
 end
 
