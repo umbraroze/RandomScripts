@@ -5,9 +5,6 @@
 # to a more logical format:
 #    == Blah. -- January 1, 2010 ==
 #
-# Bugs: Haven't touched Perl in years, especially since unicode came
-# here, so I have no idea how to make it shut up about wide characters in print.
-#
 # by wwwwolf, 2010-09-26.
 # Do what you want with this script; no warranty whatsoever.
 
@@ -18,6 +15,7 @@ use Date::Format;
 use utf8;
 
 my $line;
+binmode STDOUT, ":utf8";
 while($line = <>) {
     chomp $line;
     if($line =~ m!^==\s*?(.*?)?\s*?(\d+/\d+/\d+)\s*?==$!gi) {
