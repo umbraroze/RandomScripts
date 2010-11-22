@@ -1,0 +1,76 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage{manuscript}
+\usepackage[{{story.language}}]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{datetime}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\title{ {{story.title}} }
+\author{ {{story.author}} }
+\date{ {{story.publication_date}} }
+
+\pagestyle{fancyplain}
+\newdateformat{isodate}{\THEYEAR-\twodigit{\THEMONTH}-\twodigit{\THEDAY}}
+\fancyhead[L]{ {{story.title}} ({{story.file_name}}) }
+\fancyhead[C]{}
+\fancyhead[R]{\isodate\today\ \currenttime}
+\fancyfoot[L]{ {{story.user_name}} }
+\fancyfoot[C]{}
+\fancyfoot[R]{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+\pdfinfo{
+   /Author ({{story.author}})
+   /Title ({{story.title}})
+   {{story.pdfinfo_creation_date}}
+   /ModDate (D:\pdfdate)
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\newcommand{\scenebreak}[0]{\#}
+
+\hbox{}
+\vskip 1cm
+\hbox{}
+
+\begin{center}
+{\bf {{story.title}} }
+\end{center}
+
+\framebox{
+\begin{minipage}{14cm}
+
+This is a critical review copy, produced of the material as of
+\isodate\today\ \currenttime. The work has {{story.word_count}}~words.
+
+For review by:
+
+Notes:
+
+\hbox{}
+\vskip 1cm
+\hbox{}
+\end{minipage}
+}
+\hbox{}
+\vskip 0.5cm
+\hbox{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN OF THE CONTENT
+{{story.content}}
+% END OF THE CONTENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% jEdit:mode=latex:encoding=utf-8:
+

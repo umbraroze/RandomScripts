@@ -1,0 +1,20 @@
+#!/usr/bin/perl
+# Merges hard-linebreaked paragraphs.
+
+use strict;
+use warnings;
+
+my $current = "";
+while (<>) {
+    chomp;
+    if ($_ eq '') {
+	print "$current\n\n";
+	$current = "";
+    } else {
+	$current .= ($current eq '' ? "" : " ") . $_;
+    }
+}
+
+print "$current\n\n" unless ($current eq '');
+
+

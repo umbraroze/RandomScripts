@@ -1,0 +1,196 @@
+#!/usr/bin/ruby
+# WWWWolf's LaTeX mangler for draft printouts.
+
+scriptdir = File.dirname(__FILE__)
+lib = scriptdir + '/ruby-lib'
+$LOAD_PATH.push(lib)
+
+require 'wordcount'
+require 'rubygems'
+require 'liquid'
+require 'etc'
+
+######################################################################
+
+class Story < Liquid::Drop
+  attr :language
+  attr :title
+  attr :author
+  attr :status
+  attr :publication_date
+  attr :creation_date
+  attr :file_name
+  attr :meta_file_name
+  attr :user_name
+  attr :word_count
+  attr :content, :write
+  def initialize(filename=nil)
+    @user_name = Etc.getlogin() or "unknownuser"
+    load(filename) unless filename.nil?
+  end
+  def load(filename)
+    filedir = File.dirname(filename)
+    filebase = File.basename(filename,'.tex')
+    @meta_file_name = "#{filedir}/#{filebase}.meta"
+    if File.exists?(@meta_file_name)
+      load_from_meta_file(@meta_file_name)
+    else
+      @meta_file_name = nil
+      load_from_latex_file(filename)
+    end
+    @file_name = pre_process_value(filebase)
+    @word_count = WordCount.count_in_file(filename,:latex)
+  end
+  def pdfinfo_creation_date
+    if(@creation_date.nil? or @creation_date == 'unknown creation date')
+      return ""
+    else 
+	return "/CreationDate (D:#{@creation_date.tr('-: ','')})"
+    end
+  end
+  def pre_process_value(value)
+    r = value
+    # do math mode substitutions
+    unless r.nil?
+	r.gsub!(/_/,'$\_$')
+    end
+    return r
+  end
+  def set_by_field(field,value)
+    value = pre_process_value(value)
+    case field
+    when 'LANGUAGE'
+      @language = value
+    when 'TITLE'
+      @title = value
+    when 'AUTHOR'
+      @author = value
+    when 'STATUS'
+      @status = value
+    when 'PUBLICATIONDATE'
+      @publication_date = value
+    when 'CREATIONDATE'
+      @creation_date = value
+    when 'FILENAME'
+      @file_name = value
+    when 'USERNAME'
+      @user_name = value
+    when 'WORDCOUNT'
+      @word_count = value
+    else
+      fail "Unknown field name #{field}"
+    end
+  end
+  def parse_metadata_entry(line)
+    unless line =~ /^(\S+?):\s*(.*)$/
+      fail "#{line} doesn't look like a metadata line."
+    end
+    # Allow fields in format "Foo bar: Baz"
+    field = $1.tr('- ','').upcase
+    value = $2
+    if field == 'NONE'
+      value = nil
+    end
+    return [field,value]
+  end
+  def load_from_meta_file(filename)
+    metas = nil
+    File.open(filename,'r') do |f|
+      metas = f.readlines.map { |x| x.strip }.delete_if { |x| x =~ /^$/ or x =~ /^#/ }
+    end
+    metas.each do |m|
+      f = parse_metadata_entry(m)
+      set_by_field(*f)
+    end
+  end
+  def load_from_latex_file(filename)
+    File.open(filename,'r') do |f|
+      mode = :looking_for_beginning
+      while l = f.readline do
+	if mode == :looking_for_beginning and l =~ /^%\s*?Metadata:/
+	  mode = :reading_metadata
+	  next
+	end
+	if mode == :reading_metadata
+	  if l =~ /^%\s*?End:/
+	    mode = :metadata_ended # Not really needed, but hey
+	    return
+	  else
+	    l =~ /^%\s*(.*)$/
+	    e = parse_metadata_entry($1)
+	    set_by_field(*e)
+	    next
+	  end
+	end
+      end
+    end
+    # Hit the end of the file; did we even find the beginning?
+    if mode == :looking_for_beginning
+      fail "LaTeX file #{filename} didn't seem to have metadata"
+    end
+    if mode == :reading_metadata
+      warn "The LaTeX file #{filename} didn't have a metadata end marker"
+    end
+  end
+  def dump
+    puts "Language: #{@language}"
+    puts "Title: #{@title}"
+    puts "Author: #{@author}"
+    puts "Status: #{@status}"
+    puts "Publication date: #{@publication_date}"
+    puts "Creation date: #{@creation_date}"
+    puts "File name: #{@file_name}"
+    puts "User name: #{@user_name}"
+    puts "Word count: #{@word_count}"
+  end
+end
+
+######################################################################
+
+filename = ARGV.shift or fail "Usage: #{$0} filename"
+
+templatefilename = scriptdir + '/templates/draft-printout.tex'
+unless File.readable?(templatefilename)
+  fail "Can't read the template file #{templatefilename}" 
+end
+
+outdir = File.dirname(filename) + '/out'
+unless File.exists?(outdir)
+  Dir.mkdir(outdir)
+end
+date = Time.now.strftime("%Y%m%d")
+outputfilename = "#{outdir}/#{File.basename(filename)}-DRAFT-#{date}.tex"
+
+story = Story.new(filename)
+
+# Read template, perform substitutions
+template = nil
+File.open(templatefilename,'r') do |f|
+  template = f.read
+end
+
+puts "\n\nWWWWolf's mysterious LaTeX mangler"
+puts "=================================="
+puts
+puts "Template: #{templatefilename}"
+puts "Story: #{filename}"
+puts "Meta: #{story.meta_file_name}"
+puts "Output: #{outputfilename}"
+puts
+story.dump()
+puts
+
+# Slurp contentfile in
+File.open(filename,'r') do |f|
+  story.content = f.read
+end
+
+# Write to file.
+File.open(outputfilename,'w') do |f|
+  f.puts Liquid::Template.parse(template).render('story' => story)
+end
+
+# Local variables:
+# mode:ruby
+# End:
+# jEdit:mode=ruby:indentSize=2:tabSize=2:noTabs:

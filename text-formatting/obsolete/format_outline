@@ -1,0 +1,69 @@
+#!/usr/bin/ruby
+# For transforming Emacs outline files to HTML. Uses Textile markup
+# for everything.
+
+require 'redcloth'
+
+$filename = ARGV.shift or fail "Usage: #{$0} filename"
+fail "#{$filename} not found." unless File.exists?($filename)
+fail "#{$filename} not readable." unless File.readable?($filename)
+
+File.open($filename) do |f|
+  str = ""
+  title = "Outline"
+  begin
+    while line = f.readline do
+      next if line =~ /-\*-\s*(mode\:)?outline\s*-\*-/ # Ignore mode defs
+      # Grab title
+      if line =~ /^\#\s*Title:\s*(.*)$/ then
+	title = $1
+	next
+      end
+
+      # Count the stars, and turn them into hx. markup.
+      if line =~ /^(\*+)\s+/ then
+	level = "h" + $1.length.to_s + "."
+	line.gsub!(/^(\*+)/,level)
+      end
+
+      # Handle modifiers
+      line.gsub!(/@TODO:\s*/, "\np(todo). ")
+      line.gsub!(/@SUMMARY:\s*/, "\np(summary). ")
+      line.gsub!(/@INTRODUCING:\s*/, "\np(introducing). ")
+
+      # Done? Append to the current knowledge.
+      str += line
+    end
+  rescue EOFError # When done, we're done.
+  end
+
+  # Done collecting stuff - emit some HTML.
+  puts <<EOF
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head><title>#{title}</title>
+<style type="text/css"><!--
+    p.introducing:before {
+      content: "Introducing: "; color: #3a3;
+    }
+    p.summary:before {
+      content: "Summary: "; color: #33a;
+    }
+    p.todo:before {
+      content: "To do: "; color: #a33;
+    }
+--></style>
+</head><body>
+EOF
+ 
+  puts RedCloth.new(str).to_html
+
+  puts <<EOF
+   </body>
+ </html>
+EOF
+end
+
+
