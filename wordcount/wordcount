@@ -1,0 +1,4 @@
+#!/usr/bin/ruby
+require 'ruby-lib/wordcount'
+file = ARGV.shift or fail "Usage: #{$0} file"
+puts WordCount.count_in_file(file,:latex)
