@@ -1,0 +1,139 @@
+#!/usr/bin/ruby
+#
+# Sets the file's svn:mime-type and svn:keywords automatically based on
+# /etc/mime.types
+#
+
+require 'optparse'
+
+def handle_mime_for(filename)
+  begin
+    File.open(filename,"r") do |m|
+      while(t = m.readline) do
+	next if t =~ /^\s*$/
+	next if t =~ /^#/
+	next if t =~ /^(type|desc|exts)=/ # TODO: Should handle these too...
+	t.chomp
+	t =~ /^([a-zA-Z.-]+\/[a-zA-Z.-]+)\s+(.*)$/
+	mimetype = $1
+	extensions = $2
+	next if extensions.nil? or extensions == ""
+	extensions = extensions.split(/\s+/)
+	extensions.each do |e|
+	  if $types.has_key? e
+	    $types[e].push mimetype
+	  else
+	    $types[e] = [mimetype]
+	  end
+	end
+      end
+    end
+  rescue Errno::ENOENT
+    puts "Cannot open #{filename}"
+    exit(1)
+  rescue EOFError
+  end
+end
+
+def drop_duplicates
+  $types.keys.each do |ext|
+    $types[ext].uniq!
+  end
+end
+
+def dump_mimestuff
+  $types.keys.sort.each do |ext|
+    puts "#{ext}: #{$types[ext].join(', ')}"
+  end
+  exit(0)
+end
+
+MimeTypes = "/etc/mime.types"
+UserMimeTypes = "#{ENV['HOME']}/.mime.types"
+$use_text = false
+$dry_run = false
+$only_list = false
+$keywords = "Id Author Date"
+$forced_type = nil
+
+ARGV.options do |opts|
+  script_name = File.basename($0)
+  opts.banner = "Usage: #{script_name} [options] filename..."
+
+  opts.separator ""
+
+  opts.on("-t", "--force-text",
+          "Uses text/* instead of whatever major type the file seems to have.",
+          "Default: use normal type")  { $use_text = true }
+  opts.on("-T", "--force-type=type", String,
+          "Uses specified MIME type.",
+          "Default: use normal type")  { |$forced_type| }
+  opts.on("-k", "--keywords=kws", String,
+          "SVN keywords to set for text/*.",
+          "Default: Id Author Date")  { |$keywords| }
+  opts.on("-D", "--dry-run",
+          "Doesn't actually change the type; merely echoes the commands.") { $dry_run = true }
+  opts.on("-L", "--list-types",
+          "Shows mapping of MIME types to extensions and exits.") { $only_list = true }
+
+  opts.separator ""
+
+  opts.on("-h", "--help",
+          "Show this help message.") { puts opts; exit }
+
+  opts.parse!
+  if ARGV.length == 0 and not $only_list
+    puts opts
+    exit
+  end
+end
+
+$types = {}
+handle_mime_for(MimeTypes)
+handle_mime_for(UserMimeTypes) if File.exists? UserMimeTypes
+drop_duplicates
+dump_mimestuff if $only_list
+
+ARGV.each do |fn|
+  if $forced_type.nil?
+    # Figure out extension.
+    fn =~ /\.([^\.]+)$/
+    extension = $1
+    if extension.nil? then 
+      puts "WARNING: Can't find an extension for #{fn}"
+      next
+    end
+    # Is there a type for this extension? If so, set it
+    if not $types.has_key? extension
+      puts "Can't find MIME type for #{fn}"
+      next
+    end
+    mimetype = $types[extension][0]
+    if mimetype == nil then
+      puts "Can't find MIME type for #{fn}"
+      next
+    end
+    # Change the MIME type to text/whatever if the flag is set
+    if $use_text then
+      mimetype.gsub!(/^[^\/]+\//,"text/")
+    end
+  else
+    # We have a forced mimetype. Let's just use that.
+    mimetype = $forced_type;
+  end
+
+  if mimetype =~ /^text\//
+    has_text = true
+  else
+    has_text = false
+  end
+
+  if not $dry_run
+    puts ">> #{fn}: #{mimetype} #{(has_text ? '[Text]' : '[Binary]')}"
+    system("/usr/bin/svn","propset","svn:mime-type",mimetype,fn)
+    system("/usr/bin/svn","propset","svn:keywords",$keywords,fn) if has_text
+  else
+    puts "Should run: /usr/bin/svn propset svn:mime-type '#{mimetype}' '#{fn}'"
+    puts "Should run: /usr/bin/svn propset svn:keywords '#{keywords}' '#{fn}'" if has_text
+  end
+end
