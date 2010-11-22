@@ -1,0 +1,20 @@
+#!/usr/bin/perl
+# WWWWolf's God-Damnedly Awful Script to Convert the Beautiful UTF-8
+# stuff to Not-so-beautiful LaTeXery. 2007-12-11
+
+use strict;
+use warnings;
+
+while (<>) {
+  # punctuation
+  s/â€“/--/gi;
+  s/â€/''/gi;
+  # scandinavics
+  s/Ã¤/ä/gi;
+  s/Ã¶/ö/gi;
+  s/Ã„/Ä/gi;
+  s/Ã–/Ö/gi;
+
+  # Done
+  print;
+}
