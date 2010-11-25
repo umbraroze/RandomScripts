@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+# WWWWolf's God-Damnedly Awful Script to NOT Convert the Beautiful UTF-8
+# stuff to Not-so-beautiful LaTeXery, but other way around.
+# Original script 2007-12-11, further hacked 2010-11-25.
+
+use strict;
+use warnings;
+use utf8;
+
+binmode STDOUT, ":utf8";
+
+while (<>) {
+    # punctuation
+    s/---/\x{2014}/gi;
+    s/--/\x{2013}/gi;
+    s/``/\x{201C}/gi;
+    s/''/\x{201D}/gi;
+    s/\\ldots(\{\})?/\x{2026}/gi;
+    s/\.\.\./\x{2026}/gi;
+
+    # Done
+    print;
+}
+
