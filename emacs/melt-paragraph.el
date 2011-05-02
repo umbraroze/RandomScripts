@@ -1,19 +1,31 @@
-;;;; Written by WWWWolf, 2005-07-06
-;;;; Bugfix by WWWWolf, 2005-08-07
+;;;; Will turn normal emacslike paragraphs of text into long-lines
+;;;; paragraphs. Bound to "C-c RET".
+;;;;
+;;;; (c) Urpo Lankinen 2005,2011. Do what you want with this, as long
+;;;; as this copyright notice is present. No warranty expressed or
+;;;; implied.
+;;;;
+;;;; Written by wwwwolf, 2005-07-06
+;;;; Bugfix by wwwwolf, 2005-08-07
+;;;; Further bugfix by wwwwolf, 2011-05-02
 ;;;; tested on xemacs 21.5.18-carbon-b1 on macosx
-;;;; Note that this might be slightly over-engineered.
+;;;;       and gnu emacs 23.2.1 on macosx
 
 (defun melt-paragraph ()
-"Combines the paragraph, separated by blank lines on either side, on
-current buffer, into a single line."
+  "Combines the paragraph under the point, separated by blank lines
+on either side, into a single line."
   (interactive)
   (let ((parabeg 0)
 	(paraend 0))
-    ;; Find beginning - back up until we hit a blank line
+    ;; Find beginning of the paragrapg - back up until we hit a blank line
+    ;; or the beginning of the buffer.
     (beginning-of-line)
-    (while (not (= (following-char) ?\n))
-      (forward-line -1))
-    (forward-line 1)
+    (if (> (point) (point-min)) ; Not at the beginning of buffer?
+	(let ()
+	  (while
+	      (not (= (following-char) ?\n))
+	    (forward-line -1))
+	  (forward-line 1)))
     (setq parabeg (point))
     ;; Then, let's find the end, same way
     (while (and
