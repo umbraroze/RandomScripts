@@ -21,12 +21,12 @@
 use strict;
 use warnings;
 
-system("dpkg -l > /tmp/dpkg.$$.installed.txt 2> /tmp/dpkg.$$.whine.txt");
-
-# Read installed stuff
-
 our (%status,%warned);
 
+# Produce some interesting reports
+system("dpkg -l > /tmp/dpkg.$$.installed.txt 2> /tmp/dpkg.$$.whine.txt");
+
+# Read the package list
 open(my $INSTALLED,"</tmp/dpkg.$$.installed.txt") or die;
 my ($line);
 while($line = <$INSTALLED>) {
@@ -44,6 +44,7 @@ while($line = <$INSTALLED>) {
 close($INSTALLED);
 unlink("/tmp/dpkg.$$.installed.txt");
 
+# Read the dpkg warnings
 open(my $WHINE,"</tmp/dpkg.$$.whine.txt") or die;
 while($line = <$WHINE>) {
     chomp $line;
@@ -60,6 +61,7 @@ while($line = <$WHINE>) {
 close($WHINE);
 unlink("/tmp/dpkg/$$.whine.txt");
 
+# Print out a nice report
 my $pkgname;
 foreach $pkgname (sort keys %status) {
     print $status{$pkgname}."\t$pkgname\n";
