@@ -4,3 +4,4 @@ one is active at the time."
   (interactive)
   (auto-fill-mode)
   (visual-line-mode))
+(provide 'toggle-wrap)

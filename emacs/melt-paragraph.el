@@ -46,3 +46,4 @@ on either side, into a single line."
     (widen)))
 
 (define-key global-map "\C-c\C-m" 'melt-paragraph)
+(provide 'melt-paragraph)
