@@ -7,10 +7,9 @@
 # May be somewhat stupid and buggy and doesn't really take all org-mode
 # markup into account at the moment.
 #
-# © Urpo Lankinen 2011. You are free to use and modify this script for
-# any purpose, as long as this copyright notice remains in the file.
-# NO WARRANTY expressed or implied.
-#
+# Copyright © Urpo Lankinen 2011. You are free to use, distribute and
+# modify this script for any purpose, as long as this copyright notice
+# remains unmodified. NO WARRANTY expressed or implied.
 
 require 'optparse'
 
@@ -38,7 +37,7 @@ File.open(filename) do |f|
   l = true
   extracting = false
   hit_level = 0
-  while(not l.nil?)
+  while not l.nil?
     begin
       l = f.readline
     rescue EOFError
@@ -47,7 +46,7 @@ File.open(filename) do |f|
     next if l =~ /^#/ # Ignore comments
     next if l =~ /^$/ # Ignore empty lines
 
-    if(l =~ /^(\*+)\s+(.*?)\s*(:\S+?:)?\s*$/) # Matches org headline
+    if l =~ /^(\*+)\s+(.*?)\s*(:\S+?:)?\s*$/ # Matches org headline
       hlevel = $1.length
       hline = $2.chomp
       if $3.nil?
@@ -56,7 +55,7 @@ File.open(filename) do |f|
         htags = $3.chomp
       end
       # Was headline undefined at the start of the program? It is defined now
-      headline = hline if(headline.nil?)
+      headline = hline if headline.nil?
       # Is this our headline?
       if headline == hline
         headline_found = true
