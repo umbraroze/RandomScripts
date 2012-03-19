@@ -3,11 +3,12 @@
 # This script counts words in an org-mode file subtree. By default, it picks the
 # first org-mode headline in the file, and counts words in all headings
 # below it. Comments, empty lines and and headlines are ignored.
-# To choose an alternate headline, specify it with -h (e.g. -h "Story").
+# Drawers are only counted when -d command line flag is specified.
+# To choose an alternate headline, specify it with -H (e.g. -H "Story").
 # May be somewhat stupid and buggy and doesn't really take all org-mode
 # markup into account at the moment.
 #
-# Copyright © Urpo Lankinen 2011. You are free to use, distribute and
+# Copyright © Urpo Lankinen 2011,2012. You are free to use, distribute and
 # modify this script for any purpose, as long as this copyright notice
 # remains unmodified. NO WARRANTY expressed or implied.
 
@@ -19,10 +20,14 @@ script = File.readlink(script) if File.symlink?(script)
 $: << File.dirname(script)
 require 'ruby-lib/wordcount'
 
+count_drawers = false
 headline = nil
-Usage = "Usage: #{$0} [-h headline] filename.org"
+Usage = "Usage: #{$0} [-d] [-h headline] filename.org"
 ARGV.options do |opts|
-  opts.on("-h", "--headline=str", String,
+  opts.on("-d", "--drawers",
+          "Also count the contents of drawers.",
+          "Default: drawers not counted") { count_drawers = true }
+  opts.on("-H", "--headline=str", String,
           "The headline of the subtree to be counted",
           "Default: first headline in the file") { |h| headline = h }
   opts.parse!
@@ -37,6 +42,7 @@ File.open(filename) do |f|
   l = true
   extracting = false
   hit_level = 0
+  within_drawer = false
   while not l.nil?
     begin
       l = f.readline
@@ -45,6 +51,19 @@ File.open(filename) do |f|
     end
     next if l =~ /^#/ # Ignore comments
     next if l =~ /^$/ # Ignore empty lines
+
+    if l =~ /^\s*:(\S+):\s*$/ # Matches drawer
+      drawer_name = $1
+      if drawer_name == "END"
+        within_drawer = false
+        next
+      end
+      if (drawer_name != "END" and within_drawer)
+        fail "Drawer #{drawer_name} within drawer?!"
+      end
+      within_drawer = true
+      next
+    end
 
     if l =~ /^(\*+)\s+(.*?)\s*(:\S+?:)?\s*$/ # Matches org headline
       hlevel = $1.length
@@ -71,6 +90,7 @@ File.open(filename) do |f|
         extracting = false
       end
     else # Handle non-heading lines.
+      next if within_drawer and not count_drawers
       result << l if extracting and not l.nil?
     end
   end
