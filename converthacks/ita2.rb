@@ -31,6 +31,9 @@ end
 
 # All-important conversion function.
 def byteval(x)
+  # Does it look like a character?
+  fail "#{x} doesn't look like a 5-bit binary char." unless x =~ /^[01]{5}$/
+  # It does. So return its decoded form.
   return [x].pack("B5")
 end
 
@@ -85,20 +88,26 @@ begin
   while l = STDIN.readline
     tokens = l.chomp.split(/\s+/)
     tokens.each do |t|
-      fail "Token #{t} doesn't look like a 5-bit binary character." unless t =~ /^[01]{5}$/
+      # Decode the character.
       v = byteval(t)
+      # Scour the table for elements that match this one.
       $decodement.each do |d|
+        # Found the character we were looking for?
+        # If not, keep running
         next unless
           ($byteorder == :msb_left and d[0] == v) or
           ($byteorder == :msb_right and d[1] == v)
+
+        # What's the character's value?
         c = nil
-        if decmode == :alpha
-          c = d[2]
-        elsif decmode == :numeric
-          c = d[3]
-        else
-          fail "What mode is this?"
+        case decmode
+        when :alpha then c = d[2]
+        when :numeric then c = d[3]
+        else fail "What mode is this?"
         end
+        
+        # Is that a mode-change character? If so,
+        # change mode.
         if c == :alpha
           decmode = :alpha
           printf("[A..]") if $show_mode_changes
@@ -106,8 +115,11 @@ begin
           decmode = :numeric
           printf("[1..]") if $show_mode_changes
         else
+          # Not a mode-change character. Print it.
           printf(c)
         end
+        break # Found the character in the table, so 
+              # that's that for the loop.
       end
     end
   end
