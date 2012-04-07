@@ -12,10 +12,10 @@ ARGV.options do |opts|
   opts.banner = "Usage: #{File.basename($0)} [--mode-changes] [--order={left|right}] < input.txt"
   opts.separator ""
   opts.on("-m", "--mode-changes",
-          "Show mode changes.",
+          "Show control characters used to change to alphabet or figures modes.",
           "Default: off") { $show_mode_changes = true }
   opts.on("-o", "--order={left|right}", String,
-          "Byte ordering, most significant byte on left or right.",
+          "Byte ordering, most significant bit on left or right.",
           "Default: left") do |mode|
     case mode.downcase
     when "left" then $byteorder = :msb_left
