@@ -17,7 +17,7 @@ declare GAIN=`sox ex.wav -n stat 2>&1 | grep "Volume adjustment:" | cut -d':' -f
 sox ex.wav norm.wav gain $GAIN
 rm ex.wav
 # Deinterlace and rescale the video. Merge with normalised audio track.
-ffmpeg -i some_forge_bullshit.mov -i norm.wav \
+ffmpeg -i $0 -i norm.wav \
     -map 0:0 -map 1:0 \
     -vf "yadif=0:0:0,scale=854:480,setdar=16:9" -aspect 16:9 \
     -vcodec libxvid -vb 1200k \
