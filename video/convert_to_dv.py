@@ -4,56 +4,69 @@
 # shell scripts that I user right now. The plan is to integrate these
 # all to a single Python script.
 
+import sys
+import os
+import re
+
+FFMPEG_BINARY = '/usr/bin/ffmpeg'
+
+def terminate_with_usage():
+    print("Usage: convert_to_dv profile inputfile [outputfile]")
+    sys.exit()
+    
+profile = None
+inputfile = None
+outputfile = None
+try:
+    profile = sys.argv[1]
+except IndexError:
+    print("No profile specified")
+    terminate_with_usage()
+try:
+    inputfile = sys.argv[2]
+except IndexError:
+    print("No input file name specified")
+    terminate_with_usage()
+try:
+    outputfile = sys.argv[3]
+except IndexError:
+    outputfile = re.sub('\.(mov|avi)$','',inputfile) + '.dv'
+
+print("Profile: %s" % profile)
+print("Input: %s" % inputfile)
+print("Output: %s" % outputfile)
+
+params = None
+if profile == 'easycap_fix_ar':
+    params = [
+        FFMPEG_BINARY,
+        '-i', inputfile,
+        outputfile
+    ]
+elif profile == 'easycap_fix_ar_no_fancy':
+    params = [
+        FFMPEG_BINARY,
+        '-i', inputfile,
+        outputfile
+    ]
+elif profile == 'fraps':
+    params = [
+        FFMPEG_BINARY,
+        '-i', inputfile,
+        outputfile
+    ]
+else:
+    print("Unknown profile.")
+    sys.exit()
+
+print("Command to invoke: %s" % params)
 
 ##### CONVERT EASYCAP TO DV, CORRECT BOGUS ASPECT RATIO
 
 # #!/bin/sh
 # 
 # in=$1
-# bn=`basename $1 .mov`
-# outmov="$bn.arfix.mov"
-# outdv="$bn.arfix.dv"
 # outfdv="$bn.dv"
-# outtestfdv="$bn.test.dv"
-# 
-# ## Two steps. This WORKS, but the raw file is too bloody huge.
-# 
-# #ffmpeg -i $in -filter:v yadif \
-# #              -r 25 \
-# #              -aspect 16:9 -codec:v rawvideo -acodec copy \
-# #              $outmov
-# #ffmpeg -i $outmov -aspect 16:9 -s 720x576 -ar 48000 $outdv
-# #rm $outmov
-# 
-# ## One-step conversion. YADIF doesn't work. produce reasonable quality at all.
-# 
-# #ffmpeg -i $in \
-# #              -filter:v 'yadif=0:0:0' \
-# #              -filter:v 'scale=720:576:1' \
-# #              -aspect 16:9 \
-# #              -r 25 -ar 48000 \
-# #              $outdv
-# 
-# ## Two steps to x264 and DV.
-# 
-# #ffmpeg -i $in -filter:v yadif \
-# #              -r 25 \
-# #              -aspect 16:9 -codec:v libx264 -acodec copy -b:v 2400k \
-# #              $outmov
-# #ffmpeg -i $outmov -filter:v 'scale=720:576' \
-# #              -ar 48000 $outfdv
-# 
-# ## Two steps, piping shit.
-# ## Will fail because some idiots had access to the fseek() function
-# ## when they were developing formats.
-# 
-# #ffmpeg -i $in -filter:v yadif \
-# #              -r 25 \
-# #              -aspect 16:9 -codec:v rawvideo -acodec copy \
-# #              -f avi pipe:1 | \
-# #ffmpeg -i pipe:0 -aspect 16:9 -s 720x576 -ar 48000 $outdv
-# 
-# ## One step. See if this comma bastard works.
 # 
 # ffmpeg -i $in -filter:v 'yadif,scale=720:576' \
 #               -aspect 16:9 \
@@ -67,11 +80,7 @@
 # #!/bin/sh
 # 
 # in="$1"
-# bn=`basename "$1" .avi`
-# outmov="$bn.arfix.mov"
-# outdv="$bn.arfix.dv"
 # outfdv="$bn.dv"
-# outtestfdv="$bn.test.dv"
 # 
 # # using aspect 4:3 for normal videos
 # # no yadif because we already have progressive shit.
