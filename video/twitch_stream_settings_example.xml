@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <video>
+    <device>/dev/video1</device>
+    <bitrate>1200k</bitrate>
+    <buffer>16000k</buffer>
+    <size>320x240</size>
+    <framerate>25</framerate>
+    <keyframerate>50</keyframerate>
+    <preset>ultrafast</preset>
+  </video>
+  <audio>
+    <device>hw:1</device>
+    <bitrate>64k</bitrate>
+    <buffer>16000k</buffer>
+  </audio>
+  <endpoint>
+    <key>live_12345678_ABCDEFGHIJKLMNOPQRSTUWXYZABCDE</key>
+  </endpoint>
+</settings>
