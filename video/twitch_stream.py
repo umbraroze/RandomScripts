@@ -114,7 +114,7 @@ ffmpeg_params = [
     output
 ]
 
-print(ffmpeg_params)
-#os.execv(ffmpeg_binary,ffmpeg_params)
+#print(ffmpeg_params)
+os.execv(ffmpeg_binary,ffmpeg_params)
 
 
