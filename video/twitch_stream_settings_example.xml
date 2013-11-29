@@ -5,6 +5,7 @@
     <bitrate>1200k</bitrate>
     <buffer>16000k</buffer>
     <size>320x240</size>
+    <sizewidescreen>427x240</sizewidescreen>
     <framerate>25</framerate>
     <keyframerate>50</keyframerate>
     <preset>ultrafast</preset>
