@@ -9,6 +9,7 @@
     <framerate>25</framerate>
     <keyframerate>50</keyframerate>
     <preset>ultrafast</preset>
+    <encoder>libx264</encoder> <!-- optional; libx264 is default -->
   </video>
   <audio>
     <device>hw:1</device>

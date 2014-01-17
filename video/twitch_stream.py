@@ -56,6 +56,7 @@ import sys
 import getopt
 import xml.etree.ElementTree as ElementTree
 
+# Utility class to easily fetch XML elements by xpath
 class param:
     def __init__(this,settings):
         this._tree = ElementTree.parse(os.path.expanduser(settings))
@@ -84,6 +85,7 @@ for o in opts:
     if '--widescreen' in o:
         widescreen = True
 
+# Figure out whether we use FFmpeg or avconv
 ffmpeg_binary = None
 if os.path.exists('/usr/bin/ffmpeg'):
     ffmpeg_binary = '/usr/bin/ffmpeg'
@@ -95,23 +97,36 @@ if ffmpeg_binary == None:
     print("Can't find either ffmpeg or avconv.")
     sys.exit(1)
 
+# Get us an encoder; libx264 is default unless specified in parameters
+h264_video_encoder = 'libx264'
+if param['video/encoder'] != None:
+    h264_video_encoder = param['video/encoder']
+
+#print("H.264 encoder: %s" % h264_video_encoder)
+#sys.exit(1)
+
+# Figure out the aspect ratio and video size
 aspect = '4:3'
 if widescreen:
     aspect = '16:9'
 size = param['video/size']
 if widescreen:
     size = param['video/sizewidescreen']
+
+# Construct the final FFmpeg parameter list
 ffmpeg_params = [
     ffmpeg_binary,
     # Video device.
+    '-video_size', size, # who the fuck knows why this is now needed??
     '-f', 'video4linux2',
     '-i', param['video/device'],
     # General video settings
+    '-f', 'h264',
     '-r', param['video/framerate'],
-    '-s', size,
+    #'-s', size,
     '-aspect', aspect,
     # Video encoder. We set b:vr=minrate=maxrate to approximate CBR
-    '-c:v', 'libx264',
+    '-c:v', h264_video_encoder,
     '-g', param['video/keyframerate'],
     '-b:v', param['video/bitrate'],
     '-minrate', param['video/bitrate'],
@@ -131,7 +146,7 @@ ffmpeg_params = [
     output
 ]
 
-#print(ffmpeg_params)
-os.execv(ffmpeg_binary,ffmpeg_params)
+print(ffmpeg_params)
+#os.execv(ffmpeg_binary,ffmpeg_params)
 
 
