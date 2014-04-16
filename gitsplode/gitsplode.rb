@@ -11,6 +11,7 @@
 # NO WARRANTY EXPRESSED OR IMPLIED.
 ######################################################################
 
+require 'pp'
 require 'optparse'
 require 'rexml/document'
 
@@ -79,17 +80,40 @@ $filerelname.gsub!(/^#{$repodir}\//,'')
 fail "OK, my logic in figuring out the relative path name failed." if $filerelname =~ /^\//
 
 # Get the version history for that file.
-$historydata = nil
-open("| git log -n10000 --pretty=format:'%H|%ct|%s' --no-merges #{$filename}") do |f|
-  $historydata = f.gets(nil).split(/\n/)
-  $historydata.collect! do |l|
-    e = l.split(/\|/,3) # Split at | characters
-    mtime = e[1].to_i
-    e[1] = Time.at(mtime) # Interpret the 2nd field as seconds since epoch
-    e.insert(2,mtime) # Put the original value in too, because we may need it
-    e # And that's that!
+$historydata = []
+hdata = []
+open("| git log -n10000 --pretty=format:'LOG|%H|%ct|%s' --name-only --follow --no-merges -- '#{$filename}'") do |file|
+  begin
+    while f = file.readline.chomp do
+      if f =~ /^LOG\|/  # Log entry line
+      then
+        e = f.split(/\|/,4) # Split at | characters
+        hash = e[1]
+        mtime = e[2].to_i
+        mtimeparsed = Time.at(mtime)
+        desc = e[3]
+        hdata = [hash,        # hash
+                 mtimeparsed, # mtime as Time object
+                 mtime,       # mtime as seconds since epoch
+                 desc,        # description
+                 nil]         # filename
+      elsif f !~ /^$/  # Filename (non-empty line)
+      then 
+        hdata[4] = f
+      else
+        $historydata << hdata
+        hdata = []
+      end
+    end
+  rescue EOFError
+    # End of file, final entry
+    # if the last one isn't in the history data, put it in
+    if $historydata.last[0] != hdata[0]
+      $historydata << hdata
+    end
   end
 end
+
 fail "No history entries; is #{$filename} versioned?" if $historydata.length == 0
 
 # Sort the history by date.
@@ -134,7 +158,7 @@ EOF
   $summarydoc.elements["/commitdata"] << c
 
   # Extract the file
-  system("git show #{e[0]}:#{$filerelname} > #{$outputdir}/#{realoutfile}")
+  system("git show '#{e[0]}:#{e[4]}' > #{$outputdir}/#{realoutfile}")
   puts "Extracted commit #{e[0]} - #{e[1]} - #{e[3]}"
 end
 
