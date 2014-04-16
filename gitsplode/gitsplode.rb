@@ -5,13 +5,12 @@
 # to a directory.
 #
 ######################################################################
-# Copyright © Urpo Lankinen 2010. This software may be used for any
+# Copyright © Urpo Lankinen 2010,2014. This software may be used for any
 # purpose, and distributed and modified freely, as long as this
 # copyright notice is retained unmodified. THIS SOFTWARE COMES WITH
 # NO WARRANTY EXPRESSED OR IMPLIED.
 ######################################################################
 
-require 'pp'
 require 'optparse'
 require 'rexml/document'
 
