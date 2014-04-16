@@ -16,11 +16,19 @@ require 'rexml/document'
 
 $outputdir = Dir.pwd + "/out"
 $usage = ""
+$before = nil
+$after = nil
 OptionParser.new do |opts|
   opts.banner = "Usage: #{$0} [options] file"
   opts.on("-o", "--output-directory DIRNAME", "Directory to store the files to",
           "  [default: #{$outputdir}]") do |x|
     $outputdir = x
+  end
+  opts.on("-B", "--before DATE", "Include commits before the specified date.") do |x|
+    $before = x
+  end
+  opts.on("-A", "--after DATE", "Include commits after the specified date.") do |x|
+    $after = x
   end
   $usage = opts.to_s
 end.parse!
@@ -29,6 +37,17 @@ if ARGV.length == 0
   exit
 else
   $filename = ARGV.shift
+end
+
+# Date options sanity check
+if ((not $before.nil?) and (not $after.nil?))
+  puts "ERROR: You can specify either --before or --after but not both."
+  puts $usage
+  exit(1)
+end
+$get_all = true
+if (not $before.nil?) or (not $after.nil?)
+  $get_all = false
 end
 
 # OK, does the file exist?
@@ -78,10 +97,21 @@ $filerelname = $fullfilename
 $filerelname.gsub!(/^#{$repodir}\//,'')
 fail "OK, my logic in figuring out the relative path name failed." if $filerelname =~ /^\//
 
+dateswitch = ''
+unless $get_all
+  if not $before.nil?
+    dateswitch = "--before=#{$before}"
+  elsif not $after.nil?
+    dateswitch = "--after=#{$date}"
+  else
+    fail "Whuh? Before after what? I thought I sorted this out. "+
+      "You shouldn't see this."
+  end
+end
 # Get the version history for that file.
 $historydata = []
 hdata = []
-open("| git log -n10000 --pretty=format:'LOG|%H|%ct|%s' --name-only --follow --no-merges -- '#{$filename}'") do |file|
+open("| git log -n10000 --pretty=format:'LOG|%H|%ct|%s' #{dateswitch} --name-only --follow --no-merges -- '#{$filename}'") do |file|
   begin
     while f = file.readline.chomp do
       if f =~ /^LOG\|/  # Log entry line
