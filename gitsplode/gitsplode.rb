@@ -5,7 +5,7 @@
 # to a directory.
 #
 ######################################################################
-# Copyright © Urpo Lankinen 2010. This software may be used for any
+# Copyright © Urpo Lankinen 2010,2014. This software may be used for any
 # purpose, and distributed and modified freely, as long as this
 # copyright notice is retained unmodified. THIS SOFTWARE COMES WITH
 # NO WARRANTY EXPRESSED OR IMPLIED.
@@ -16,11 +16,19 @@ require 'rexml/document'
 
 $outputdir = Dir.pwd + "/out"
 $usage = ""
+$before = nil
+$after = nil
 OptionParser.new do |opts|
   opts.banner = "Usage: #{$0} [options] file"
   opts.on("-o", "--output-directory DIRNAME", "Directory to store the files to",
           "  [default: #{$outputdir}]") do |x|
     $outputdir = x
+  end
+  opts.on("-B", "--before DATE", "Include commits before the specified date.") do |x|
+    $before = x
+  end
+  opts.on("-A", "--after DATE", "Include commits after the specified date.") do |x|
+    $after = x
   end
   $usage = opts.to_s
 end.parse!
@@ -29,6 +37,17 @@ if ARGV.length == 0
   exit
 else
   $filename = ARGV.shift
+end
+
+# Date options sanity check
+if ((not $before.nil?) and (not $after.nil?))
+  puts "ERROR: You can specify either --before or --after but not both."
+  puts $usage
+  exit(1)
+end
+$get_all = true
+if (not $before.nil?) or (not $after.nil?)
+  $get_all = false
 end
 
 # OK, does the file exist?
@@ -78,18 +97,52 @@ $filerelname = $fullfilename
 $filerelname.gsub!(/^#{$repodir}\//,'')
 fail "OK, my logic in figuring out the relative path name failed." if $filerelname =~ /^\//
 
-# Get the version history for that file.
-$historydata = nil
-open("| git log -n10000 --pretty=format:'%H|%ct|%s' --no-merges #{$filename}") do |f|
-  $historydata = f.gets(nil).split(/\n/)
-  $historydata.collect! do |l|
-    e = l.split(/\|/,3) # Split at | characters
-    mtime = e[1].to_i
-    e[1] = Time.at(mtime) # Interpret the 2nd field as seconds since epoch
-    e.insert(2,mtime) # Put the original value in too, because we may need it
-    e # And that's that!
+dateswitch = ''
+unless $get_all
+  if not $before.nil?
+    dateswitch = "--before=#{$before}"
+  elsif not $after.nil?
+    dateswitch = "--after=#{$date}"
+  else
+    fail "Whuh? Before after what? I thought I sorted this out. "+
+      "You shouldn't see this."
   end
 end
+# Get the version history for that file.
+$historydata = []
+hdata = []
+open("| git log -n10000 --pretty=format:'LOG|%H|%ct|%s' #{dateswitch} --name-only --follow --no-merges -- '#{$filename}'") do |file|
+  begin
+    while f = file.readline.chomp do
+      if f =~ /^LOG\|/  # Log entry line
+      then
+        e = f.split(/\|/,4) # Split at | characters
+        hash = e[1]
+        mtime = e[2].to_i
+        mtimeparsed = Time.at(mtime)
+        desc = e[3]
+        hdata = [hash,        # hash
+                 mtimeparsed, # mtime as Time object
+                 mtime,       # mtime as seconds since epoch
+                 desc,        # description
+                 nil]         # filename
+      elsif f !~ /^$/  # Filename (non-empty line)
+      then 
+        hdata[4] = f
+      else
+        $historydata << hdata
+        hdata = []
+      end
+    end
+  rescue EOFError
+    # End of file, final entry
+    # if the last one isn't in the history data, put it in
+    if $historydata.last[0] != hdata[0]
+      $historydata << hdata
+    end
+  end
+end
+
 fail "No history entries; is #{$filename} versioned?" if $historydata.length == 0
 
 # Sort the history by date.
@@ -134,7 +187,7 @@ EOF
   $summarydoc.elements["/commitdata"] << c
 
   # Extract the file
-  system("git show #{e[0]}:#{$filerelname} > #{$outputdir}/#{realoutfile}")
+  system("git show '#{e[0]}:#{e[4]}' > #{$outputdir}/#{realoutfile}")
   puts "Extracted commit #{e[0]} - #{e[1]} - #{e[3]}"
 end
 
