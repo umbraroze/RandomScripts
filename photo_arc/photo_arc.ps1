@@ -31,10 +31,15 @@ $env:Path += ";c:\Program Files\7-Zip";
 # Figure out input and output destinations
 Try
 {
-    $inputdir = Join-Path (Resolve-Path $card) "DCIM"
+    $cardpath = Resolve-Path $card -ErrorAction Stop
 }
-Catch
+Catch [System.Management.Automation.DriveNotFoundException]
 {
+    echo "Source card ${card} doesn't seem to be inserted. Exiting."
+    Break
+}
+$inputdir = Join-Path $cardpath "DCIM" -ErrorAction Stop
+if (-Not (Test-Path $inputdir)) {
     echo "Source card ${card} doesn't seem to have a DCIM folder. Exiting."
     Break
 }
@@ -50,7 +55,7 @@ Catch
 }
 
 echo "Input folder: ${inputdir}"
-echo "Output archive: $archive"
+echo "Output archive: ${archive}"
 
 & 7z a -t7z -r $archive $inputdir 
 
