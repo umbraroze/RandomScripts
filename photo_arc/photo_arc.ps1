@@ -12,6 +12,18 @@ param (
     [string]$camera = "Nikon_D3200"
 )
 
+echo "-------------------------------------------------------------------"
+echo "Photo archival tool"
+echo "Creating a dated 7zip archive of the photos on the SD card."
+echo "-------------------------------------------------------------------"
+echo "Command line settings:"
+echo " -card `"${card}`""
+echo " -outputdir `"${outputdir}`""
+echo " -camera `"${camera}`""
+echo "-------------------------------------------------------------------"
+echo "If information isn't correct, press Ctrl+C to abort."
+Pause
+
 ############################################################
 # Add location of 7z.exe to the path
 $env:Path += ";c:\Program Files\7-Zip";
