@@ -9,7 +9,7 @@
 #
 # If you need object orientation to cook a command line for an application,
 # it's probably an indication of a larger problem (as in "where's my
-# frigging configuration file support"?) Furthermore, mencoder's 
+# frigging configuration file support"?) Furthermore, mencoder's
 # command line syntax is self-contradictory (options syntax vs
 # filters syntax) and just plain unmemorizable.
 #
@@ -29,7 +29,7 @@
 #    doesn't blow up? "hw.0,0". Duh. Obvious. Learn.)
 #
 # In jwz's words, "pure comedy".
-# 
+#
 # I'll keep adding to this program every now and then when the stuff gets
 # messed up for no particular reason due to some upgrade somewhere.
 # mencoder has a funny habit of *not* being so stable in this respect.
@@ -43,11 +43,28 @@
 # And no, I don't claim this is particularly clean Ruby. But neither is
 # the *purpose* particularly clean.
 #
-# (c) Urpo "WWWWolf" Lankinen 2005-2006
-# You can use, modify and distribute this thing without any restrictions,
-# just leave this copyright notice here as it is. There is no warranty
-# of any kind.
+###########################################################################
 #
+# Copyright (c) 2005,2006 Urpo Lankinen
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+# 
 ###########################################################################
 
 require 'optparse'
@@ -165,7 +182,7 @@ class VideoProfile < Profile
 	if f.length != 2 then
 	  fail "incorrectly specified filter filter #{f.inspect}"
 	end
-	ret = ret + f[0] + 
+	ret = ret + f[0] +
 	  (f[1].nil? ? "" : "=" + f[1]) + ","
       end
       ret.chop!
@@ -321,7 +338,7 @@ end
 
 class MP364kCBRAudio < AudioProfile
   def initialize
-    super()  
+    super()
     @description = "LAME MP3, 64kbps constant bitrate"
     @codec = 'mp3lame'
     @options = {
@@ -349,7 +366,7 @@ ARGV.options do |opts|
   opts.on("-v", "--videoprofile=profile", String,
 	  "Which set of video settings to use.",
 	  "Default: " + DefaultVideoProfile,
-	  "Available: " + VideoProfile.profiles_like_this.join(" ")) do 
+	  "Available: " + VideoProfile.profiles_like_this.join(" ")) do
     |videoprofile|
   end
   opts.on("-a", "--audioprofile=profile", String,

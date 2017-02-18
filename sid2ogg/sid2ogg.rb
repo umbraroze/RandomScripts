@@ -24,17 +24,25 @@
 #
 ######################################################################
 #
-# (c) WWWWolf (Urpo Lankinen), 2005,2006,2007
-# wwwwolf@iki.fi / http://www.iki.fi/wwwwolf/
+# Copyright (c) 2005,2006,2007 Urpo Lankinen
 #
-# You're free to use this script for any purpose, and expand/tinker with it
-# how you want, and distribute it how you want, just keep this copyright
-# and attribution here. This thing has NO WARRANTY OF ANY KIND
-# (and a sucky error handling to boot)!
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
 #
-# This software is an UNMAINTAINED QUICK HACK. You're free to publish 
-# your changes, or mail them to me, don't count on me to incorporate
-# them on my published version though.
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 #
 ######################################################################
 
@@ -175,10 +183,10 @@ class SongLengthDatabase < HVSCTextualDatabase
     end
     return lengths
   end
-  
+
   private
   def parse_db_line(l)
-    # FORE! Remove trailing linebreak, split to MD5SUM=TIMES, 
+    # FORE! Remove trailing linebreak, split to MD5SUM=TIMES,
     # take the latter, split according to spaces, and make them SongLengths.
     l.chomp.split(/=/,2)[1].split(/ /).collect { |x| SongLength.new(x) }
   end
@@ -238,7 +246,7 @@ class SIDTuneInformationList < HVSCTextualDatabase
 	    else
 	      trimmed_l = l
 	      trimmed_l.gsub!(/^\s+/,'')
-	      trimmed_l.gsub!(/\s+$/,'')	      
+	      trimmed_l.gsub!(/\s+$/,'')
 	      c[c.length - 1] = c.last + " " + trimmed_l
 	    end
 	  end
@@ -364,7 +372,7 @@ ARGV.options do |opts|
   end
   # Establish songlength database file location
   if OPTIONS[:song_length_db].nil?
-    OPTIONS[:song_length_db] = 
+    OPTIONS[:song_length_db] =
       OPTIONS[:hvsc_directory] + '/DOCUMENTS/Songlengths.txt'
   end
   # Determine file name relative to the HVSC directory.
@@ -390,7 +398,7 @@ unless File.exists?(OPTIONS[:full_sid_file])
   fail "Can't find file #{OPTIONS[:full_sid_file]}"
 end
 unless File.readable?(OPTIONS[:full_sid_file])
-  fail "File #{OPTIONS[:full_sid_file]} not readable" 
+  fail "File #{OPTIONS[:full_sid_file]} not readable"
 end
 
 # Parse the PSID file header
