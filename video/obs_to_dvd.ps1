@@ -11,6 +11,9 @@ param(
     [int]$bitrate = 4000
 )
 
+#$ffmpeg = $home + "\Applications\ffmpeg\bin\ffmpeg.exe";
+$ffmpeg = $env:ProgramFiles + "\FFmpeg\ffmpeg\bin\ffmpeg.exe";
+
 echo "-------------------------------------------------------------------"
 echo "OBS capture to DVD encoder"
 echo "-------------------------------------------------------------------"
@@ -20,10 +23,10 @@ echo " -inputfile `"${inputfile}`""
 echo " -outputfile `"${outputfile}`""
 echo " -bitrate ${bitrate} [video, kb/s]"
 echo "-------------------------------------------------------------------"
+echo "FFmpeg install location: ${ffmpeg}"
+echo "-------------------------------------------------------------------"
 echo "If information isn't correct, press Ctrl+C to abort."
 Pause
-
-$ffmpeg = $home + "\Applications\ffmpeg-20161221-54931fd-win64-static\bin\ffmpeg.exe";
 
 # To delay video: -map 1:v -map 0:a
 # To delay audio: -map 0:v -map 1:a

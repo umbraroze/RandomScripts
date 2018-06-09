@@ -26,7 +26,7 @@ Pause
 
 ############################################################
 # Add location of 7z.exe to the path
-$env:Path += ";c:\Program Files\7-Zip";
+$env:Path += ";${env:ProgramFiles}\7-Zip";
 
 # Figure out input and output destinations
 Try
