@@ -4,14 +4,23 @@
 # using exiftool.
 foreach ($item in (Get-Item *.tif)) {
     $oldname = ($item.Name)
-    $newname = ("img" + $item.Basename + ".dng") -Replace '[\[\]]',''
-    Move-Item -LiteralPath $oldname -Destination $newname
-    Write-Output "${oldname} -> ${newname}"
+    if($oldname -match '[\[\]]') {
+        $newname = ("img" + $item.Basename + ".dng") -Replace '[\[\]]',''
+        Move-Item -LiteralPath $oldname -Destination $newname
+        Write-Output "${oldname} -> ${newname}"
+    } else {
+        Write-Output "${oldname} OK"
+    }
 }
 foreach ($item in (Get-Item *.jpg)) {
     $oldname = ($item.Name)
-    $newname = ("img" + $item.Name) -Replace '[\[\]]',''
-    Move-Item -LiteralPath $oldname -Destination $newname
-    Write-Output "${oldname} -> ${newname}"
+    if($oldname -match '[\[\]]') {
+        $newname = ("img" + $item.Name) -Replace '[\[\]]',''
+        Move-Item -LiteralPath $oldname -Destination $newname
+        Write-Output "${oldname} -> ${newname}"
+    } else {
+        Write-Output "${oldname} OK"
+    }
 }
+Write-Output "Renaming done, fixing dates..."
 & exiftool.exe '-FileModifyDate<DateTimeOriginal' *.dng *.jpg
