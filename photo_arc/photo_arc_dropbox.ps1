@@ -1,26 +1,34 @@
 ############################################################
-# PowerShell script for archiving photographs.
+# PowerShell script for archiving photographs from Dropbox.
 # Uses 7-Zip.
 ############################################################
 
 param (
-    # Card device
-    [string]$card = "F:\",
     # Where will we store the output file?
     [string]$outputdir = "D:\",
     # What's the camera name?
     [string]$camera = "Unknown_Camera"
 )
 
+Try
+{
+    $inputdir = Resolve-Path "${HOME}\Dropbox\Camera Uploads" -ErrorAction Stop
+}
+Catch
+{
+    Write-Error "Can't find Dropbox Camera Uploads folder"
+    Break
+}
+
 Write-Output @"
 -------------------------------------------------------------------
-Photo archival tool
-Creating a dated 7zip archive of the photos on the SD card.
+Dropbox photo archival tool
+Creating a dated 7zip archive of the photos on Dropbox Camera Uploads.
 -------------------------------------------------------------------
+Source folder: ${inputdir}
 Command line settings:
- -card `"${card}`"
- -outputdir `"${outputdir}`"
- -camera `"${camera}`"
+  -outputdir `"${outputdir}`"
+  -camera `"${camera}`"
 -------------------------------------------------------------------
 If information isn't correct, press Ctrl+C to abort.
 "@
@@ -31,20 +39,6 @@ Pause
 $env:Path += ";${env:ProgramFiles}\7-Zip";
 
 # Figure out input and output destinations
-Try
-{
-    $cardpath = Resolve-Path $card -ErrorAction Stop
-}
-Catch [System.Management.Automation.DriveNotFoundException]
-{
-    Write-Error "Source card ${card} doesn't seem to be inserted. Exiting."
-    Break
-}
-$inputdir = Join-Path $cardpath "DCIM" -ErrorAction Stop
-if (-Not (Test-Path $inputdir)) {
-    Write-Error "Source card ${card} doesn't seem to have a DCIM folder. Exiting."
-    Break
-}
 $datestamp = Get-Date -format "yyyyMMdd"
 Try
 {
@@ -61,5 +55,8 @@ Input folder: ${inputdir}
 Output archive: ${archive}
 "@
 
-& 7z.exe a -t7z -r $archive $inputdir 
+& 7z.exe a -t7z -x'!*.ini' -r $archive $inputdir 
+
+
+
 
