@@ -91,8 +91,7 @@ $exiftool = "exiftool.exe"
 $settings = Get-Content -Path $SettingsFile -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop
 
 if(-Not $settings.Cameras.$Camera) {
-    Write-Error "Can't find camera $Camera in settings"
-    Break
+    throw "Can't find camera $Camera in settings"
 }
 if($settings.Tools.SevenZip) { $7zip = $settings.Tools.SevenZip }
 if($settings.Tools.ExifTool) { $exiftool = $settings.Tools.ExifTool }
@@ -128,16 +127,13 @@ Settings:
 Write-Line
 
 if (-Not $Card) {
-    Write-Error "Card is unspecified"
-    Break
+    throw "Card is unspecified"
 }
 if (-Not $Backup) {
-    Write-Error "Backup folder is unspecified"
-    Break
+    throw "Backup folder is unspecified"
 }
 if (-Not $Destination) {
-    Write-Error "Destination folder is unspecified"
-    Break
+    throw "Destination folder is unspecified"
 }
 
 Write-Output "If information isn't correct, press Ctrl+C to abort."
@@ -153,8 +149,7 @@ if($Card -eq "Dropbox") {
     }
     Catch
     {
-        Write-Error "Can't find Dropbox Camera Uploads folder"
-        Break
+        throw "Can't find Dropbox Camera Uploads folder"
     }        
 } else {
     Try
@@ -163,13 +158,11 @@ if($Card -eq "Dropbox") {
     }
     Catch [System.Management.Automation.DriveNotFoundException]
     {
-        Write-Error "Source card ${Card} doesn't seem to be inserted. Exiting."
-        Break
+        throw "Source card ${Card} doesn't seem to be inserted. Exiting."
     }
     $inputdir = Join-Path $cardpath "DCIM" -ErrorAction Stop
     if (-Not (Test-Path $inputdir)) {
-        Write-Error "Source card ${Card} doesn't seem to have a DCIM folder. Exiting."
-        Break
+        throw "Source card ${Card} doesn't seem to have a DCIM folder. Exiting."
     }
 }
 
@@ -184,14 +177,16 @@ if($SkipBackup) {
     }
     Catch
     {
-        Write-Error "Output directory ${Backup} doesn't seem to exist. Exiting."
-        Break
+        throw "Output directory ${Backup} doesn't seem to exist. Exiting."
     }
     
     Write-Output "Input folder: ${inputdir}"
     Write-Output "Output archive: ${archive}"
 
     & $7zip a -t7z -r $archive $inputdir 
+    if(!$?) {
+        throw "7-Zip process returned an error"
+    }
 }
 
 # Move the photos to the Incoming folder, and from there to the desired folder structure.
