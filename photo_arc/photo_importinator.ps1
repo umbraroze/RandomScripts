@@ -169,7 +169,7 @@ if($Card -eq "Dropbox") {
 # Backup the card contents
 
 if($SkipBackup) {
-    Write-Output "⚠️ Skipping backup"
+    Write-Output (([char]0x26A0)+" Skipping backup")
 } else {
     Try
     {
@@ -190,15 +190,39 @@ if($SkipBackup) {
 }
 
 # Move the photos to the Incoming folder, and from there to the desired folder structure.
-# (Or should the stuff be actually imported directly from the SD card? I think two steps might
-# be safer.)
 if($SkipImport) {
-    Write-Output "⚠️ Skipping import"
+    Write-Output (([char]0x26A0)+" Skipping import")
 } else {
+    $t = Resolve-Path (Join-Path -Path $Destination -ChildPath "Incoming") -ErrorAction Stop
+    # Move stuff from the card to Incoming
+    if($Card -eq "Dropbox") {
+        Write-Output "Dropbox folder ${inputdir}"
+        Get-ChildItem $inputdir | ForEach-Object {
+            $s = Join-Path -Path $inputdir -ChildPath $_ 
+            Write-Output ("${s} "+[char]0x2b62+" ${t}")
+            Move-Item $s $t
+        }
+    } else {
+        Get-ChildItem $inputdir | ForEach-Object {
+            $sf = Join-Path -Path $inputdir -ChildPath $_
+            Write-Output "SD card DCIM subfolder ${sf}"
+            Get-ChildItem $sf | ForEach-Object {
+                $s = Join-Path -Path $sf -ChildPath $_ 
+                Write-Output ("${s} "+[char]0x2b62+" ${t}")
+                Move-Item $s $t
+            }
+        }
+    }
+
     # Run ExifTool to import
     Write-Output "Moving the photos from Incoming to the destination folders..."
     $l = Get-Location
     Set-Location -Path $Destination
-    & $exiftool
+    # TODO: make the output folder format configurable???
+    & $exiftool -r "-Directory<DateTimeOriginal" -d "%Y/%m/%d" Incoming
+    $r = $?
     Set-Location $l
+    if(!$r) {
+        throw "ExifTool returned an error"
+    }
 }
