@@ -167,7 +167,7 @@ if($Card -eq "Dropbox") {
 }
 
 # Backup the card contents
-
+Write-Line
 if($SkipBackup) {
     Write-Output (([char]0x26A0)+" Skipping backup")
 } else {
@@ -190,6 +190,7 @@ if($SkipBackup) {
 }
 
 # Move the photos to the Incoming folder, and from there to the desired folder structure.
+Write-Line
 if($SkipImport) {
     Write-Output (([char]0x26A0)+" Skipping import")
 } else {
